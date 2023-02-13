@@ -55,8 +55,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
-    # heroku
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    # Deployment
 ]
 
 ROOT_URLCONF = 'ekartapp.urls'
