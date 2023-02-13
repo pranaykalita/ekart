@@ -74,3 +74,6 @@ python manage.py runserver
 - creat project for converter app
 - create template html form to get input file as csv from user
 
+***14 Feb,2023:***
+- try to setup on heroku(install whitenose for css serving ,gunicorn )
+-create proc file
