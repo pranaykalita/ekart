@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-ady2p^2!6a0kj60lm_slej8_xwjc$63akbkbnz3*yyo5br0!rt
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['ekart-production.up.railway.app']
 
 
 # Application definition
