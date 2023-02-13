@@ -1,4 +1,4 @@
-## projectlink [pranaykalita/ekart](https://github.com/pranaykalita/ekart)
+## [pranaykalita/ekart](https://github.com/pranaykalita/ekart)
 
 # Requirements
 - python 3.0+ 
