@@ -77,4 +77,4 @@ python manage.py runserver
 
 ***14 Feb,2023:***
 - try to setup on heroku(install whitenose for css serving ,gunicorn )
--create proc file
+- create proc file
