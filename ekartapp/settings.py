@@ -139,3 +139,7 @@ STATIC_ROOT = BASE_DIR / 'static'
 # STATICFILES_DIRS = (
 #     os.path.join(BASE_DIR, 'static'),
 # )
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://ekart-python.up.railway.app'
+]
