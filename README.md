@@ -4,21 +4,23 @@
 - python 3.0+ 
 - django
 
-## initialization on local
+## initialization on local (CMD/CommandPromt)
 
-``` Bash
-# create Virtual Environment
-# activate Environment
-> python -m venv environmentName
-> environmentName\Scripts\Activate
+### create Virtual Environment
 ```
-``` Python
-# run server
-(environmentName)> python manage.py runserver
+python -m venv environmentName
 ```
-``` Bash
-# install Requirements
-(environmentName) > pip install django
+### Activate Environment
+```
+environmentName\Scripts\Activate
+```
+### install Django
+```
+pip install django
+```
+### Run Server
+``` 
+python manage.py runserver
 ```
 # 
 
