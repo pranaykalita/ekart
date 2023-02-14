@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-ady2p^2!6a0kj60lm_slej8_xwjc$63akbkbnz3*yyo5br0!rt'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["*",'ekart-production.up.railway.app']
 
@@ -58,7 +58,7 @@ MIDDLEWARE = [
     # Deployment
 ]
 
-ROOT_URLCONF = 'ekartapp.urls'
+
 
 TEMPLATES = [
     {
@@ -140,6 +140,7 @@ STATIC_ROOT = BASE_DIR / 'static'
 #     os.path.join(BASE_DIR, 'static'),
 # )
 
+ROOT_URLCONF = 'ekartapp.urls'
 CSRF_TRUSTED_ORIGINS = [
     'https://ekart-python.up.railway.app'
 ]
