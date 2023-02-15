@@ -1,7 +1,7 @@
 ## [pranaykalita/ekart](https://github.com/pranaykalita/ekart)
 ## [LIVE VIEW on Railway](ekart-production.up.railway.app)
 
-#### building an e-commerce platform using Django. You will start by designing and implementing the core features of an e-commerce website, including product catalogs, shopping carts, and checkout pages. You will also work on integrating payment gateways for secure transactions and implementing an order management system to keep track of customer orders.
+#### building an e-commerce platform using Django. You will start by designing and implementing the core features of an e-commerce website, including product catalogs, shopping carts, and checkout pages. will also work on integrating payment gateways for secure transactions and implementing an order management system to keep track of customer orders.
 
 # Requirements
 - python 3.0+ 
