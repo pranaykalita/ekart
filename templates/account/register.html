@@ -46,6 +46,20 @@
                   <input type="password" id="ConfirmPassword" class="form-control form-control-lg" name="cnfpassword" />
                 </div>
 
+                {% if messages %}
+                  <div class="messages">
+                    {% for msg in messages %}
+                      <script>
+                      Swal.fire({
+                        icon: 'error',
+                        text: '{{msg}}',
+                      }
+                        
+                        );</script>
+                    {% endfor %}
+                  </div>
+                  {% endif %}
+
                 <div class="d-flex justify-content-center">
                   <button type="submit" class="btn btn-success btn-block btn-lg gradient-custom-4">Register</button>
                 </div>

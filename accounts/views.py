@@ -14,14 +14,14 @@ def register(request):
         lastname = request.POST.get("LastName")
         email = request.POST.get("email")
         passwordcnf = request.POST.get("cnfpassword")
-
-        user = User.objects.create_user(username=username,
-                                        first_name=firstname,
-                                        last_name=lastname,
-                                        email=email,
-                                        password=passwordcnf)
-        user.save
-        return render(request, 'account/login.html')
+        # check email and username
+        if User.objects.filter(username=username).exists() and User.objects.filter(email=email).exists():
+            messages.warning(request, 'Username or Email Already Exist')
+            return render(request, 'account/register.html')
+        else:
+            user = User.objects.create_user(username=username,first_name=firstname,last_name=lastname,email=email,password=passwordcnf)
+            user.save
+            return render(request, 'account/login.html')
     return render(request, 'account/register.html')
 
 def login(request):
@@ -35,7 +35,8 @@ def login(request):
             auth.login(request, user)
             return render(request, 'account/account.html')
         else:
-            return redirect('/')
+            messages.warning(request, 'Invalid Credintials')
+            return render( request, 'account/login.html')
     else:
         return render( request, 'account/login.html')
 
