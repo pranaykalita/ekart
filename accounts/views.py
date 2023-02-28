@@ -21,7 +21,7 @@ def register(request):
         else:
             user = User.objects.create_user(username=username,first_name=firstname,last_name=lastname,email=email,password=passwordcnf)
             user.save
-            return render(request, 'account/login.html')
+            return redirect('/account/login')
     return render(request, 'account/register.html')
 
 def login(request):
@@ -33,7 +33,7 @@ def login(request):
         user = auth.authenticate(username=username, password=password)
         if user is not None:
             auth.login(request, user)
-            return render(request, 'account/account.html')
+            return render(request, 'account/account.html', {'success': 'alert("asdasd")'})
         else:
             messages.warning(request, 'Invalid Credintials')
             return render( request, 'account/login.html')

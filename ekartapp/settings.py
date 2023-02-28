@@ -144,3 +144,6 @@ ROOT_URLCONF = 'ekartapp.urls'
 CSRF_TRUSTED_ORIGINS = [
     'https://ekart-python.up.railway.app'
 ]
+
+LOGOUT_REDIRECT_URL = 'logout'
+LOGIN_REDIRECT_URL = 'loginpage'
