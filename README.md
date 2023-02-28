@@ -9,18 +9,18 @@
 ## initialization on local (CMD/CommandPromt)
 
 ### create Virtual Environment
-``` Python
+```python
 python -m venv environmentName
-``` Python
+```
 ### Activate Environment
-``` Python
+```python
 environmentName\Scripts\Activate
 ```
 ### install Django
-``` Python
+```python
 pip install django
 ```
 ### Run Server
-``` Python
+```python
 python manage.py runserver
 ```
