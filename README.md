@@ -21,6 +21,6 @@ environmentName\Scripts\Activate
 pip install django
 ```
 ### Run Server
-```python
+```bash
 python manage.py runserver
 ```
