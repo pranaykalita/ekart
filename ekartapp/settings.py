@@ -39,7 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # custom app
-    'apphome',
+    'appmain',
+    'products',
+    'users',
+    'orders',
+    'seller',
     'accounts',
 ]
 
@@ -131,19 +135,19 @@ USE_TZ = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# static folder CSS
-
+# static files setup
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'static'
-# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-# STATICFILES_DIRS = (
-#     os.path.join(BASE_DIR, 'static'),
-# )
 
-ROOT_URLCONF = 'ekartapp.urls'
-CSRF_TRUSTED_ORIGINS = [
-    'https://ekart-python.up.railway.app'
-]
+# media folder for storing media files
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
+# ROOT_URLCONF = 'ekartapp.urls'
+# CSRF_TRUSTED_ORIGINS = [
+#     'https://ekart-python.up.railway.app'
+# ]
+
+# default login logout page
 LOGOUT_REDIRECT_URL = 'logout'
 LOGIN_REDIRECT_URL = 'loginpage'
