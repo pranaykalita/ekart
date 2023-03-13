@@ -1,1 +1,0 @@
-web: gunicorn ekartapp.wsgi --log-file -
