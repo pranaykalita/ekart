@@ -140,14 +140,14 @@ STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'static'
 
 # media folder for storing media files
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = BASE_DIR / 'media'
 
-# ROOT_URLCONF = 'ekartapp.urls'
-# CSRF_TRUSTED_ORIGINS = [
-#     'https://ekart-python.up.railway.app'
-# ]
+ROOT_URLCONF = 'ekartapp.urls'
+CSRF_TRUSTED_ORIGINS = [
+    'https://ekart-python.up.railway.app'
+]
 
 # default login logout page
-LOGOUT_REDIRECT_URL = 'logout'
-LOGIN_REDIRECT_URL = 'loginpage'
+# LOGOUT_REDIRECT_URL = 'logout'
+# LOGIN_REDIRECT_URL = 'loginpage'

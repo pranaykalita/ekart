@@ -6,9 +6,9 @@ from django.urls import path
 from accounts import views as accountapp
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
 
-    
+    path('admin/', admin.site.urls),
+    path('', accountapp.login ,name='home'),
 
     # account pages
     path('account', accountapp.account , name='accountpage'),
