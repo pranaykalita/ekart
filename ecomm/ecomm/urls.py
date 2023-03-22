@@ -2,17 +2,14 @@
 from django.contrib import admin
 from django.urls import path
 
-from sellers import views as sales
-from accounts import views as accounts
+from sellers import views as salesapp
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    # sales
-    path('sales', sales.dashboard ,name="dashboard"),
-    path('sales/login', accounts.sellerlogin , name="salelogin"),
-    path('sales/logout', accounts.sellerlogout , name="logout"),
-
-    path('sales/dashboard', sales.dashboard , name="dashboard"),
-    path('sales/products', sales.product , name="products"),
+    # sales Dashbaord
+    path('sales', salesapp.dashboard , name="dashboard"),
+    path('sales/dashboard', salesapp.dashboard , name="dashboard"),
+    path('sales/category', salesapp.category , name="category"),
+    path('sales/products', salesapp.product , name="products"),
 ]

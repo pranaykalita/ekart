@@ -5,7 +5,7 @@ Generated using [DbSchema](https://dbschema.com)
 
 
 ### Default Layout
-![img](./DefaultLayout.svg)
+![img](DefaultLayout.svg)
 
 
 ## Tables

@@ -2,6 +2,7 @@
 <html lang="en">
 {% load static %}
 {% url 'dashboard' as dashboard %}
+{% url 'category' as category %}
 {% url 'products' as Products %}
 {% url 'orders' as orders %}
 {% url 'invoices' as invoices %}
@@ -52,6 +53,11 @@
 						</a>
 					</li>
 
+					<li class="sidebar-item  {% if request.path == category %}active{% endif %}">
+						<a class="sidebar-link" href="{% url 'category' %}">
+							<i class="align-middle" data-feather="user"></i> <span class="align-middle">category</span>
+						</a>
+					</li>
 					<li class="sidebar-item  {% if request.path == Products %}active{% endif %}">
 						<a class="sidebar-link" href="{% url 'products' %}">
 							<i class="align-middle" data-feather="user"></i> <span class="align-middle">Products</span>
@@ -98,7 +104,7 @@
 
 				<div class="sidebar-cta">
 					<li class="sidebar-item">
-						<a class="sidebar-link" href="{% url 'logout' %}">
+						<a class="sidebar-link" href="#">
 							<i class="align-middle" data-feather="log-in"></i> <span class="align-middle">Logout</span>
 						</a>
 					</li>
