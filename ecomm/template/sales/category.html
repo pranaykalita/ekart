@@ -1,5 +1,5 @@
 {% extends 'sales/common.html' %}
-{% block title %} Produucts {% endblock %}
+{% block title %} Category {% endblock %}
 {% block content %}
 {% load static %}
 <main class="content">
@@ -21,11 +21,13 @@
                     Add Category
                 </button>
 
-                <!-- Modal category -->
+                <!-- Modal Add category -->
                 <div class="modal fade rounded" id="addcategoryModal" tabindex="-1"
                     aria-labelledby="addcategoryModalLabel" aria-hidden="true">
                     <div class="modal-dialog  modal-dialog-centered">
-                        <div class="modal-content" style="border-radius: 10px;">
+                        <div class="modal-content" >
+                            <form action="{% url 'addcategory' %}" method="post">
+                                {% csrf_token %}
                             <div class="modal-header">
                                 <h1 class="modal-title text-dark" id="addcategoryModalLabel">Add Category</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
@@ -36,24 +38,27 @@
                                     <div class="col">
                                         <div class="mb-3">
                                             <label for="Category" class="form-label">Category</label>
-                                            <input type="text" class="form-control" style="border-radius: 10px;" placeholder="Insert category Name">
+                                            <input type="text" class="form-control" name="addcategoryField"  placeholder="Insert category Name" required>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save</button>
+                                <button type="submit" class="btn btn-primary">Save</button>
                             </div>
+                            </form>
                         </div>
                     </div>
                 </div>
 
-                <!-- Modal Subcategory -->
+                <!-- Modal Add Subcategory -->
                 <div class="modal fade rounded" id="addSubcategoryModal" tabindex="-1"
                     aria-labelledby="addSubcategoryModal" aria-hidden="true">
                     <div class="modal-dialog  modal-dialog-centered">
                         <div class="modal-content" style="border-radius: 10px;">
+                            <form action="{% url 'addsubcategory' %}" method="post">
+                                 {% csrf_token %}
                             <div class="modal-header">
                                 <h1 class="modal-title text-dark" id="addsubcategoryModalLabel">Add subcategory</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
@@ -64,32 +69,32 @@
                                     <div class="col">
                                         <div class="mb-3">
                                             <label for="Category" class="form-label">Select Category</label>
-                                            <select class="form-select" aria-label="Default select example">
-                                                <option selected>Open this Category select menu</option>
-                                                <option value="1">One</option>
-                                                <option value="2">Two</option>
-                                                <option value="3">Three</option>
+                                            <select id="picked" name="category_name" class="form-select" aria-label="Default select example" required>
+                                                <option selected value="selecteddisable" disabled>Open this Category select menu</option>
+                                                {% for data in categorylist%}
+                                                <option value="{{data.id}}">{{data.categoryName}}</option>
+                                                {% endfor %}
                                               </select>
                                         </div>
                                         <div class="mb-3">
                                             <label for="subCategorys" class="form-label">Sub Category</label>
-                                            <input type="text" class="form-control" style="border-radius: 10px;" placeholder="Insert subcategory Name">
-                                           
+                                            <input type="text" id="myInput" name="subcategory" class="form-control" placeholder="Insert subcategory Name" required>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save</button>
+                                <button type="submit" class="btn btn-primary">Save</button>
                             </div>
+                                </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- product sec1 -->
 
+        <!-- category show table sec1 -->
         <div class="row">
             <div class="col-12">
                 <div class="card">
@@ -107,14 +112,105 @@
                                 </tr>
                             </thead>
                             <tbody>
+                            {% for data in categorylist %}
                                 <tr>
-                                    <td>Item 1</td>
-                                    <td>1/2/3</td>
+                                    <td>{{data.categoryName}}</td>
+                                    <td>{{data.createdOn}}</td>
                                     <td>
-                                        <button class="btn btn-danger">
-                                            <i class="fa-solid fa-pen"></i> view</button>
+                                        <form action="{% url 'deletecategory' %}" method="post">
+                                             {% csrf_token %}
+                                            <input type="hidden" name="category_name" value="{{data.id}}">
+<!--                                            <a class="btn btn-success mx-2"><i class="fa-solid fa-pen"></i> view</a>-->
+                                            <a href="#" class="btn btn-success mx-2" data-bs-toggle="modal" data-bs-target="#editcategorybtn">
+                                            <i class="fa-solid fa-pen"></i>
+                                            Edit/View
+                                            </a>
+                                            <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i></i></button>
+                                        </form>
                                     </td>
                                 </tr>
+                            {% endfor%}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Edit Subcategory -->
+                <div class="modal fade rounded" id="editcategorybtn" tabindex="-1"
+                    aria-labelledby="editcategorybtn" aria-hidden="true">
+                    <div class="modal-dialog  modal-dialog-centered">
+                        <div class="modal-content" style="border-radius: 10px;">
+                            <form action="{% url 'addsubcategory' %}" method="post">
+                                 {% csrf_token %}
+                            <div class="modal-header">
+                                <h1 class="modal-title text-dark" id="editcategorybtnLabel">Edit Category</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label for="Category" class="form-label">Select Category</label>
+                                            <select name="categoryId" class="form-select" aria-label="Default select example" required>
+                                                <option selected disabled>Open this Category select menu</option>
+                                                {% for data in categorylist%}
+                                                <option value="{{data.categoryId}}">{{data.categoryName}}</option>
+                                                {% endfor %}
+                                              </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="subCategorys" class="form-label">Sub Category</label>
+                                            <input type="text" name="subcategory" class="form-control" placeholder="Insert subcategory Name" required>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </div>
+                                </form>
+                        </div>
+                    </div>
+                </div>
+
+        <!-- Subcateg table -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Sub Categoies</h5>
+
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-hover table-responsive text-center mb-0" id="dataTable">
+                            <thead>
+                                <tr>
+                                    <th>Main Category </th>
+                                    <th>Sub Category </th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for subdata in subcategorylist %}
+                                <tr>
+                                    <td>{{subdata.category}}</td>
+                                    <td>{{subdata.subcatgName}}</td>
+                                    <td>
+                                        <form action="{% url 'deletesubcategory' %}" method="post">
+                                             {% csrf_token %}
+                                            <input type="hidden" name="subcategoryid" value="{{subdata.id}}">
+                                            <div class="btn btn-success mx-2"><i class="fa-solid fa-pen"></i> view</div>
+                                            <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i></i></button>
+                                        </form>
+
+                                    </td>
+                                </tr>
+                            {% endfor%}
                             </tbody>
                         </table>
                     </div>
@@ -125,11 +221,22 @@
     </div>
 </main>
 <script>
-$('input , textarea').focus(function(){
-    $(this).css("border", "1px solid #303F9F");
-});
-$('input , textarea').blur(function(){
-    $(this).css("border", "1px solid #c7c7c7");
+$(document).ready(function() {
+  // Disable the input field if the disabled option is selected
+  if ($('#picked option:selected').is(':disabled')) {
+    $('#myInput').prop('disabled', true);
+  }
+
+
+  $('#picked').change(function() {
+    if ($('#picked option:selected').val() !== "selecteddisable") {
+    console.log("pass")
+      $('#myInput').prop('disabled', false);
+    } else {
+    console.log("fail")
+      $('#myInput').prop('disabled', true);
+    }
+  });
 });
 </script>
 {% endblock %}

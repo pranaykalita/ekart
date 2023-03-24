@@ -125,13 +125,14 @@
                                 </tr>
                             </thead>
                             <tbody>
+                            {% for data in productList %}
                                 <tr>
                                     <td>
                                         <img src="{% static 'img/avatars/avatar.jpg'%}" class="avatar img-fluid rounded me-1" alt="Charles Hall"/>
                                     </td>
-                                    <td>Item 1</td>
-                                    <td>1</td>
-                                    <td>1</td>
+                                    <td>{{data.title}}</td>
+                                    <td>{{data.price}}</td>
+                                    <td>{{data.quantity}}</td>
                                     <td><span class="fa fa-star text-warning "></span>
                                         <span class="fa fa-star text-warning  "></span>
                                         <span class="fa fa-star text-warning  "></span>
@@ -143,6 +144,7 @@
                                             <i class="fa-solid fa-pen"></i> view</button>
                                     </td>
                                 </tr>
+                            {% endfor %}
                             </tbody>
                         </table>
                     </div>
