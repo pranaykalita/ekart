@@ -1,4 +1,6 @@
 from django.db import models
+from django.utils import timezone
+
 from sellers import models as sellers
 
 # Create your models here.
@@ -7,6 +9,7 @@ from sellers import models as sellers
 class Category(models.Model):
     categoryName = models.CharField(max_length=20)
     createdOn = models.DateTimeField(auto_now_add=True)
+    updatedOn = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.categoryName
@@ -15,7 +18,8 @@ class Category(models.Model):
 class SubCategory(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     subcatgName = models.CharField(max_length=50,default="")
-    crearedOn = models.DateTimeField(auto_now_add=True)
+    createdOn = models.DateTimeField(auto_now_add=True)
+    updatedOn = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.subcatgName
@@ -27,6 +31,8 @@ class Products(models.Model):
     quantity = models.IntegerField()
     category = models.ForeignKey(Category, on_delete=models.CASCADE,default="")
     subcategory = models.ForeignKey(SubCategory, on_delete=models.CASCADE)
+    CreatededOn = models.DateTimeField(auto_now_add=True)
+    updatedOn = models.DateTimeField(auto_now=True)
     productImages = models.ImageField(upload_to="media/productimg",default="")
 
     def __str__(self):
@@ -47,7 +53,7 @@ class Review(models.Model):
     products = models.ForeignKey(Products, on_delete=models.CASCADE)
     ratings = models.IntegerField()
     comments = models.CharField(max_length=250)
-    postedOn = models.DateTimeField(auto_now_add=True,)
+    postedOn = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.comments

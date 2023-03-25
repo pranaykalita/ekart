@@ -19,7 +19,7 @@ from . import views as homeapp
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('sales/login', homeapp.login,name="sellslogin"),
-    path('sales/dashboard', homeapp.home,name="dashboard"),
-    path('sales/products', homeapp.products,name="products"),
+    path('seller/login', homeapp.login,name="sellslogin"),
+    path('seller/dashboard', homeapp.home,name="dashboard"),
+    path('seller/products', homeapp.products,name="products"),
 ]

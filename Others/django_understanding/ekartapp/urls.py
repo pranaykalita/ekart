@@ -11,6 +11,6 @@ urlpatterns = [
     path('', accountapp.login ,name='home'),
 
     # account pages
-    path('sales', saleapp.saleshome , name='dashboard'),
+    path('seller', saleapp.saleshome , name='dashboard'),
    
 ]

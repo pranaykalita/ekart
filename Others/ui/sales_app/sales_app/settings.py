@@ -118,7 +118,7 @@ USE_TZ = True
 
 # STATIC_URL = 'static/'
 # STATICFILES_DIRS = [
-#     'sales/static',
+#     'seller/static',
 # ]
 
 # static files setup
@@ -126,7 +126,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'static'
 
 STATICFILES_DIRS = [
-    'templates/sales/static/',
+    'templates/seller/static/',
 ]
 
 # Default primary key field type

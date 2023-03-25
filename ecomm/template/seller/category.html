@@ -1,0 +1,263 @@
+{% extends 'seller/common.html' %}
+{% block title %} Category {% endblock %}
+{% block content %}
+{% load static %}
+<main class="content">
+    <div class="container-fluid p-0">
+
+        <h1 class="h3 mb-3">Categories</h1>
+
+        <div class="row mb-3">
+            <div class="col">
+                <button type="button " class="btn btn-success float-end m-2" data-bs-toggle="modal"
+                        data-bs-target="#addSubcategoryModal">
+                    <i class="fa-solid fa-square-plus"></i>
+                    Add Sub Category
+                </button>
+
+                <button type="button" class="btn btn-primary float-end m-2" data-bs-toggle="modal"
+                        data-bs-target="#addcategoryModal">
+                    <i class="fa-solid fa-square-plus"></i>
+                    Add Category
+                </button>
+
+                <!-- Modal Add category -->
+                <div class="modal fade rounded" id="addcategoryModal" tabindex="-1"
+                     aria-labelledby="addcategoryModalLabel" aria-hidden="true">
+                    <div class="modal-dialog  modal-dialog-centered">
+                        <div class="modal-content">
+                            <form action="{% url 'addcategory' %}" method="post">
+                                {% csrf_token %}
+                                <div class="modal-header">
+                                    <h1 class="modal-title text-dark" id="addcategoryModalLabel">Add Category</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="mb-3">
+                                                <label for="Category" class="form-label">Category</label>
+                                                <input type="text" class="form-control" name="addcategoryField"
+                                                       placeholder="Insert category Name" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
+                                    </button>
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal Add Subcategory -->
+                <div class="modal fade rounded" id="addSubcategoryModal" tabindex="-1"
+                     aria-labelledby="addSubcategoryModal" aria-hidden="true">
+                    <div class="modal-dialog  modal-dialog-centered">
+                        <div class="modal-content" style="border-radius: 10px;">
+                            <form action="{% url 'addsubcategory' %}" method="post">
+                                {% csrf_token %}
+                                <div class="modal-header">
+                                    <h1 class="modal-title text-dark" id="addsubcategoryModalLabel">Add subcategory</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="mb-3">
+                                                <label for="Category" class="form-label">Select Category</label>
+                                                <select id="pickCategory" name="category_name" class="form-select"
+                                                        aria-label="Default select example" required>
+                                                    <option selected value="selecteddisable" disabled>Open this Category
+                                                        select menu
+                                                    </option>
+                                                    {% for data in categorylist%}
+                                                    <option value="{{data.id}}">{{data.categoryName}}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="subCategorys" class="form-label">Sub Category</label>
+                                                <input type="text" id="subcategoryInput" name="subcategory" class="form-control"
+                                                       placeholder="Insert subcategory Name" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
+                                    </button>
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- category Table -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">categoies</h5>
+                    </div>
+                    <div class="card-body">
+                        <table class="display table table-hover table-responsive  text-center mb-0" id="TableStyle">
+                            <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>CreatedOn</th>
+                                <th>UpdatedOn</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for data in categorylist %}
+                            <tr>
+                                <td>{{data.categoryName}}</td>
+                                <td>{{data.createdOn}}</td>
+                                <td>{{data.updatedOn}}</td>
+                                <td>
+                                    <form action="{% url 'deletecategory' %}" method="post">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="category_name" value="{{data.id}}">
+
+                                        <a href="#" class="btn btn-success mx-2" data-bs-toggle="modal" data-bs-target="#editcategorybtn{{ data.id }}">
+                                            <i class="fa-solid fa-pen"></i>
+                                            Edit
+                                        </a>
+                                        <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+                                    </form>
+
+                                </td>
+                            </tr>
+                            <!--Edit Category Modal-->
+                            <div class="modal fade rounded" id="editcategorybtn{{ data.id }}" tabindex="-1"
+                                 aria-labelledby="editcategorybtn{{ data.id }}" aria-hidden="true">
+                                <div class="modal-dialog  modal-dialog-centered">
+                                    <div class="modal-content" style="border-radius: 10px;">
+                                        <form action="{% url 'updateCategory' data.id %}" method="post">
+                                            {% csrf_token %}
+                                            <div class="modal-header">
+                                                <h1 class="modal-title text-dark" id="editcategorybtnLabel{{ data.id }}"> Category</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <div class="mb-3">
+                                                            <label for="Category" class="form-label">Update Category Name</label>
+                                                            <input type="text" class="form-control" name="updatecategory" value="{{ data.categoryName }}">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                    Close
+                                                </button>
+                                                <button type="submit" class="btn btn-primary">Save</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor%}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Subcategory Table   -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Sub Categoies</h5>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-hover table-responsive text-center mb-0" id="TableStyle">
+                            <thead>
+                            <tr>
+                                <th>Sub Category</th>
+                                <th>Main Category</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for subdata in subcategorylist %}
+                            <tr>
+                                <td>{{subdata.subcatgName}}</td>
+                                <td>{{subdata.category}}</td>
+                                <td>
+                                    <form action="{% url 'deletesubcategory' %}" method="post">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="subcategoryid" value="{{subdata.id}}">
+                                        <a href="#" class="btn btn-success mx-2" data-bs-toggle="modal" data-bs-target="#editsubcategorybtn{{ subdata.id }}">
+                                            <i class="fa-solid fa-pen"></i>
+                                            Edit
+                                        </a>
+                                        <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+                                    </form>
+
+                                </td>
+                            </tr>
+                            <!--Edit SUbCategory Modal-->
+                            <div class="modal fade rounded" id="editsubcategorybtn{{ subdata.id }}" tabindex="-1"
+                                 aria-labelledby="editsubcategorybtn{{ data.id }}" aria-hidden="true">
+                                <div class="modal-dialog  modal-dialog-centered">
+                                    <div class="modal-content" style="border-radius: 10px;">
+                                        <form action="{% url 'updatesubCategory' subdata.id %}" method="post">
+                                            {% csrf_token %}
+                                            <div class="modal-header">
+                                                <h1 class="modal-title text-dark" id="editsubcategorybtnLabel{{ data.id }}">Sub Category</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <div class="mb-3">
+                                                            <label for="Category" class="form-label">Category Name</label>
+                                                            <input type="text" class="form-control" name="categoryName" value="{{ subdata.category }}" disabled>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="subCategorys" class="form-label">Update Sub Category</label>
+                                                            <input type="text" name="subcategoryname" class="form-control" value="{{ subdata.subcatgName}}" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                    Close
+                                                </button>
+                                                <button type="submit" class="btn btn-primary">Save</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor%}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+{% endblock %}

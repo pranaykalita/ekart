@@ -122,7 +122,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kolkata'
 
 USE_I18N = True
 
@@ -138,7 +138,7 @@ STATIC_ROOT = BASE_DIR / 'static'
 STATICFILES_DIRS = [
 
     # seller
-    'template/sales/static/',
+    'template/seller/static/',
 ]
 
 # media folder for storing media files
