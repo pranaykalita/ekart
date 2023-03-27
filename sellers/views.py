@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
 
-from products.models import Category, SubCategory, Products
+from products.models import Category, SubCategory, Product, ProductDetail
 
 
 def dashboard(request):
@@ -9,7 +9,16 @@ def dashboard(request):
 
 
 def product(request):
-    return render(request, 'seller/products.html')
+    categories = Category.objects.all()
+    subcategories = SubCategory.objects.select_related('category').all()
+    product = ProductDetail.objects.select_related('product').all()
+    # products = Product.objects.all()
+    # productdata = ProductDetail.objects.select_related('product').all()
+    context = { 'categories' : categories,
+                'subcategories' : subcategories,
+                'product' : product,
+                }
+    return render(request, 'seller/products.html', context)
 
 
 def category(request):
@@ -76,5 +85,23 @@ def updatesubCategory(request,id):
     return render(request, 'seller/categoty.html')
 
 
+def Addproduct(request):
+    if request.method == "POST":
+        itemname = request.POST.get("itemname")
+        itemprice = request.POST.get("itemprice")
+        itemqty = request.POST.get("itemqty")
+        itemcategoryID = request.POST.get("itemcategory")
+        itemsubCategoryID = request.POST.get("itemsubcategory")
+        itemAbout = request.POST.get("itemabout")
+        itemDesc = request.POST.get("itemdescription")
+        itemimg = request.FILES.get("itemimg")
 
+        return redirect('/seller/products/')
+    return render(request, 'seller/products.html')
 
+def deleteproduct(request,id):
+        if request.method == "POST":
+            delprod = Product.objects.get(id=id)
+            delprod.delete()
+            return redirect('/seller/products/')
+        return render(request, 'seller/products.html')
