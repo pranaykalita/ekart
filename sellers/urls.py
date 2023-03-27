@@ -1,5 +1,4 @@
 from django.urls import path
-from . import views as sallersDashbaord
 from .views import *
 
 urlpatterns = [
@@ -17,8 +16,11 @@ urlpatterns = [
     path('addsubcategory/',addSubCategory, name="addsubcategory"),
     path('deletesubcategory/', deleteSubCategory, name="deletesubcategory"),
     path('updatesubcategory/<str:id>', updatesubCategory, name="updatesubCategory"),
+
     # products
     path('products/', product,name="products"),
+    path('addproducts/', Addproduct, name="addproducts"),
+    path('deleteprod/<int:id>/', deleteproduct, name="deleteproduct"),
 
 
 
