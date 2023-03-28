@@ -26,7 +26,7 @@ class SubCategory(models.Model):
 # products
 class Product(models.Model):
     item = models.CharField(max_length=100)
-    price = models.FloatField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
     quantity = models.IntegerField()
     category = models.ForeignKey(Category,on_delete=models.CASCADE)
     subCategory = models.ForeignKey(SubCategory,on_delete=models.CASCADE)
@@ -38,6 +38,7 @@ class Product(models.Model):
 class ProductDetail(models.Model):
     product = models.OneToOneField(Product, on_delete=models.CASCADE)
     about = models.TextField()
+    SKU = models.CharField(max_length=100,default="")
     description = models.TextField()
 
     def __str__(self):

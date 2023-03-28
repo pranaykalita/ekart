@@ -91,11 +91,22 @@ def Addproduct(request):
         itemprice = request.POST.get("itemprice")
         itemqty = request.POST.get("itemqty")
         itemcategoryID = request.POST.get("itemcategory")
+        category = Category.objects.get(pk=itemcategoryID)
         itemsubCategoryID = request.POST.get("itemsubcategory")
+        subcategory = SubCategory.objects.get(pk=itemsubCategoryID)
+        itemimg = request.FILES.get("itemimg")
+        print(itemimg)
+
         itemAbout = request.POST.get("itemabout")
         itemDesc = request.POST.get("itemdescription")
-        itemimg = request.FILES.get("itemimg")
+        sku = request.POST.get("sku")
 
+        saveprod = Product(item=itemname,price=itemprice,quantity=itemqty,category=category,subCategory=subcategory,image=itemimg)
+        saveprod.save()
+        prod_id = saveprod.id
+        product = Product.objects.get(pk=prod_id)
+        saveproddetails = ProductDetail(product = product,about=itemAbout,SKU=sku,description=itemDesc)
+        saveproddetails.save()
         return redirect('/seller/products/')
     return render(request, 'seller/products.html')
 

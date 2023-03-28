@@ -20,3 +20,15 @@ $(document).ready(function() {
     }
   });
 });
+
+//SKU GENERATE on Selleer
+$(document).ready(function() {
+  $('#generate-sku').click(function() {
+    const charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let sku = 'SKU-'+'';
+    for (let i = 0; i < 8; i++) {
+      sku += charset.charAt(Math.floor(Math.random() * charset.length));
+    }
+    $('#ProductSku').val(sku);
+  });
+});
