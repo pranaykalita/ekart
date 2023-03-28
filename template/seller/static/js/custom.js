@@ -1,7 +1,8 @@
-//datatable
-$(document).ready(function () {
-    $('table#TableStyle').DataTable();
+$(document).ready(function() {
+  $('table#dataTable').DataTable();
 });
+
+
 
 //CategoryEdit Disable on ADd SUbCategoryBtn MODAL
 $(document).ready(function() {
