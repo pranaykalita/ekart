@@ -6,7 +6,15 @@ from django.contrib.auth.decorators import login_required
 
 @login_required(login_url='/seller/login/')
 def dashboard(request):
-    return render(request, 'seller/dashboard.html')
+    productcount = Product.objects.count()
+    catCount = Category.objects.count()
+    subcatCount = SubCategory.objects.count()
+
+    context = {'prodCount': productcount,
+               'catCount': catCount,
+               'subCatCount': subcatCount,
+               }
+    return render(request, 'seller/dashboard.html',context)
 
 @login_required(login_url='/seller/login/')
 def product(request):

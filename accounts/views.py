@@ -6,6 +6,9 @@ from django.contrib.auth import logout
 # Create your views here.
 
 
+# seller register
+def sellerRegister(request):
+    return render(request,'seller/sellerRegister.html')
 # seller Login
 def sellerlogin(request):
     if request.user.is_authenticated:

@@ -8,11 +8,13 @@ urlpatterns = [
     path('dashboard/', dashboard, name="dashboard"),
     # category
     path('category/', category, name="category"),
-    # category Views
+
+    # category CRUD
     path('addcategory/', addCategory, name="addcategory"),
     path('deletecategory/', deleteCategory, name="deletecategory"),
     path('updatecategory/<str:id>', updateCategory, name="updateCategory"),
-    # subcategory Views
+
+    # subcategory CRUD
     path('addsubcategory/',addSubCategory, name="addsubcategory"),
     path('deletesubcategory/', deleteSubCategory, name="deletesubcategory"),
     path('updatesubcategory/<str:id>', updatesubCategory, name="updatesubCategory"),
