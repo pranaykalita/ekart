@@ -27,9 +27,11 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 # Application definition
+DJANGO_LIVESYNC = {
+    'PORT': 9999 # this is optional and is default set to 9001.
+}
 
 INSTALLED_APPS = [
-
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -45,10 +47,12 @@ INSTALLED_APPS = [
     'api',
     'rest_framework',
 ]
+
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10
 }
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

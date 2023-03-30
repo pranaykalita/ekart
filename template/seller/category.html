@@ -103,23 +103,21 @@
             </div>
         </div>
 
-        <!-- category Table -->
+        <!-- Category Table   -->
         <div class="row">
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="card-title mb-0">categoies</h5>
+                        <h5 class="card-title mb-0">Categoies</h5>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-
-
-                            <table class="table table-hovertext-center mb-0" id="dataTable">
+                            <table class="table table-hover text-center mb-0" id="dataTable">
                                 <thead>
                                 <tr>
-                                    <th>Name</th>
-                                    <th>CreatedOn</th>
-                                    <th>UpdatedOn</th>
+                                    <th>Category</th>
+                                    <th>Added On</th>
+                                    <th>Updated On</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
@@ -130,22 +128,27 @@
                                     <td>{{data.createdOn}}</td>
                                     <td>{{data.updatedOn}}</td>
                                     <td>
-                                        <form action="{% url 'deletecategory' %}" method="post">
-                                            {% csrf_token %}
-                                            <input type="hidden" name="category_name" value="{{data.id}}">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <a href="#" class="btn btn-success float-right" data-bs-toggle="modal"
+                                                   data-bs-target="#editcategorybtn{{data.id }}">
+                                                    <i class="fa-solid fa-pen"></i></a>
+                                            </div>
+                                            <div class="col-6">
+                                                <form action="{% url 'deletecategory' %}" method="post">
+                                                    {% csrf_token %}
+                                                    <input type="hidden" name="category_name" value="{{data.id}}">
+                                                    <button type="submit" class="btn btn-danger float-left">
+                                                        <i class="fa-solid fa-trash"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
 
-                                            <a href="#" class="btn btn-success mx-2" data-bs-toggle="modal"
-                                               data-bs-target="#editcategorybtn{{ data.id }}">
-                                                <i class="fa-solid fa-pen"></i>
-                                                Edit
-                                            </a>
-                                            <button type="submit" class="btn btn-danger"><i
-                                                    class="fa-solid fa-trash"></i></button>
-                                        </form>
+                                        </div>
 
                                     </td>
                                 </tr>
-                                <!--Edit Category Modal-->
+                                <!-- edit category modal-->
                                 <div class="modal fade rounded" id="editcategorybtn{{ data.id }}" tabindex="-1"
                                      aria-labelledby="editcategorybtn{{ data.id }}" aria-hidden="true">
                                     <div class="modal-dialog  modal-dialog-centered">
@@ -191,7 +194,6 @@
             </div>
         </div>
 
-
         <!-- Subcategory Table   -->
         <div class="row">
             <div class="col-12">
@@ -201,7 +203,7 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-hover  text-center mb-0" id="dataTable">
+                            <table class="table table-hover text-center mb-0" id="dataTable">
                                 <thead>
                                 <tr>
                                     <th>Sub Category</th>
@@ -215,18 +217,23 @@
                                     <td>{{subdata.subcatgName}}</td>
                                     <td>{{subdata.category}}</td>
                                     <td>
-                                        <form action="{% url 'deletesubcategory' %}" method="post">
-                                            {% csrf_token %}
-                                            <input type="hidden" name="subcategoryid" value="{{subdata.id}}">
-                                            <a href="#" class="btn btn-success mx-2" data-bs-toggle="modal"
-                                               data-bs-target="#editsubcategorybtn{{ subdata.id }}">
-                                                <i class="fa-solid fa-pen"></i>
-                                                Edit
-                                            </a>
-                                            <button type="submit" class="btn btn-danger"><i
-                                                    class="fa-solid fa-trash"></i>
-                                            </button>
-                                        </form>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <a href="#" class="btn btn-success float-right" data-bs-toggle="modal"
+                                                   data-bs-target="#editsubcategorybtn{{ subdata.id }}">
+                                                    <i class="fa-solid fa-pen"></i></a>
+                                            </div>
+                                            <div class="col-6">
+                                                <form action="{% url 'deletesubcategory' %}" method="post">
+<!--                                                    {% csrf_token %}-->
+                                                    <input type="hidden" name="subcategoryid" value="{{subdata.id}}">
+                                                    <button type="submit" class="btn btn-danger float-left"><i
+                                                            class="fa-solid fa-trash"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
+
+                                        </div>
 
                                     </td>
                                 </tr>

@@ -1,21 +1,21 @@
 {% extends 'seller/common.html' %}
-{% block title %} Produucts {% endblock %}
+{% block title %} Category {% endblock %}
 {% block content %}
 {% load static %}
+
 <main class="content">
     <div class="container-fluid p-0">
+        <h1 class="h3 mb-3">Products</h1>
 
-        <h1 class="h3 mb-3">products</h1>
-
-        <div class="row mb-3">
-            <div class="col">
-                <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal"
-                        data-bs-target="#addproductModal">
+        <div class="row m-2">
+            <div class="col-12">
+                <button class="btn btn-primary float-right" type="button" data-bs-toggle="modal"
+                        data-bs-target="#addproductsModal">
                     <i class="fa-solid fa-square-plus"></i>
-                    Add Procuts
+                    Add Products
                 </button>
-                <!-- ADd Products Modal -->
-                <div class="modal fade rounded" id="addproductModal" tabindex="-1"
+                <!-- add Product Modal-->
+                <div class="modal fade rounded" id="addproductsModal" tabindex="-1"
                      aria-labelledby="addproductModalLabel" aria-hidden="true">
                     <div class="modal-dialog  modal-dialog-centered">
                         <div class="modal-content" style="border-radius: 10px;">
@@ -117,119 +117,243 @@
                     </div>
                 </div>
             </div>
+
         </div>
-        <!-- product table -->
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header">
-                        <h5 class="card-title mb-0">Products</h5>
-
-                    </div>
                     <div class="card-body">
                         <div class="table-responsive">
-
-
-                            <table class="table table-hover table-responsive text-center mb-0" id="dataTable">
+                            <table class="table table-hover text-center mb-0" id="dataTable">
                                 <thead>
                                 <tr>
-                                    <th>Image</th>
-                                    <th>Product Name</th>
+                                    <th>image</th>
+                                    <th>Item Name</th>
                                     <th>Price</th>
                                     <th>Quantity</th>
                                     <th>category</th>
-                                    <th>Action</th>
+                                    <th>Active</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-
+                                {% for data in productList %}
                                 <tr>
-                                    {% for product in product %}
                                     <td>
-                                        <img src="{{product.product.image.url}}" class="avatar img-fluid rounded me-1"
-                                             alt="{{product.item}}"/>
+                                        <img src="{{data.product.image.url}}"
+                                             class="avatar img-fluid rounded me-1" alt="{{data.product.item}}"/>
                                     </td>
-                                    <td class="text-danger">{{product.product.item}}</td>
-                                    <td class="text-danger">{{product.product.price}} ₹</td>
-                                    <td class="text-primary">{{product.product.quantity}}</td>
-                                    <td class="text-primary">{{product.product.category}}</td>
+                                    <td>{{data.product.item}}</td>
+                                    <td>{{data.product.price}} ₹</td>
+                                    <td>{{data.product.quantity}}</td>
+                                    <td>{{data.product.category}}</td>
                                     <td>
-                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                                data-bs-target="#modal{{product.product.id}}">
-                                            View
-                                        </button>
-                                        <button class="btn btn-primary">
-                                            <i class="fa-solid fa-pen"></i> Edit
-                                        </button>
-                                        <form class="d-inline" method="post"
-                                              action="{% url 'deleteproduct' product.product.id %}">
-                                            {% csrf_token %}
-                                            <button type="submit" class="btn btn-danger">
-                                                <i class="fa-solid fa-trash"></i>
-                                            </button>
-                                        </form>
-                                    </td>
-                                </tr>
-                                {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
-                        <!--  modal-->
-                        {% for productData in product %}
-                        <div class="modal fade" id='modal{{productData.product.id}}' data-bs-backdrop="static"
-                             data-bs-keyboard="false" tabindex="-1"
-                             aria-labelledby="modal{{productData.product.id}}Label" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered modal-lg">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="staticBackdropLabel">{{productData.SKU}}</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
                                         <div class="row">
-                                            <div class="col-6">
-                                                <img class="itemdetailsmodalimg"
-                                                     src="{{productData.product.image.url}}" alt="">
+                                            <div class="col-3 col-sm-12">
+                                                <div class="form-inline">
+                                                    <div class="form-group mb-2">
+                                                        <form action="{% url 'deleteproduct' data.product.id %}"
+                                                              method="post">
+                                                            {% csrf_token %}
+
+                                                            <button type="button" class="btn btn-success m-2"
+                                                                    data-bs-toggle="modal"
+                                                                    data-bs-target="#productData{{data.product.id }}">
+                                                                View
+                                                            </button>
+                                                            <button type="button" class="btn btn-success m-2"
+                                                                    data-bs-toggle="modal"
+                                                                    data-bs-target="#editProductmodal{{data.product.id }}">
+                                                                Edit
+                                                            </button>
+                                                            <input type="hidden" name="category_name"
+                                                                   value="{{data.id}}">
+                                                            <button type="submit" class="btn btn-danger">
+                                                                <i class="fa-solid fa-trash"></i>
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </div>
                                             </div>
 
-                                            <div class="col-6">
-                                                <h3>{{productData.product.item}}</h3>
-                                                <span class="badge bg-primary">{{productData.product.category}}</span>
-                                                <span
-                                                        class="badge bg-secondary">{{productData.product.subCategory}}</span>
-
-                                                <p>{{productData.about}}</p>
-
-                                                <div class="py-3">
-                                                    <h3><strong>Description</strong></h3>
-                                                    <div>
-                                                        {% autoescape off %}
-                                                        {{productData.description}}
-                                                        {% endautoescape %}
+                                        </div>
+                                    </td>
+                                </tr>
+                                <!-- show product data modal-->
+                                <div class="modal fade" id='productData{{data.product.id}}' data-bs-backdrop="static"
+                                     data-bs-keyboard="false" tabindex="-1"
+                                     aria-labelledby="productData{{data.product.id}}Label" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="staticBackdropLabel">
+                                                    {{data.SKU}}</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row">
+                                                    <div class="col-12 col-sm-6">
+                                                        <img class="itemdetailsmodalimg"
+                                                             src="{{data.product.image.url}}" alt="">
                                                     </div>
 
+                                                    <div class="col-12 col-sm-6">
+                                                        <h3>{{data.product.item}}</h3>
+                                                        <span class="badge bg-primary">{{data.product.category}}</span>
+                                                        <span
+                                                                class="badge bg-secondary">{{data.product.subCategory}}</span>
+
+                                                        <p>{{data.about}}</p>
+
+                                                        <div class="py-3">
+                                                            <h3><strong>Description</strong></h3>
+                                                            <div>
+                                                                {% autoescape off %}
+                                                                {{data.description}}
+                                                                {% endautoescape %}
+                                                            </div>
+
+                                                        </div>
+                                                        <h4 class="price">price: <span
+                                                                class="text-danger">${{data.product.price}}</span>
+                                                        </h4>
+                                                        <h5>Quantity: <span>{{data.product.quantity}}</span></h5>
+
+
+                                                    </div>
                                                 </div>
-                                                <h4 class="price">price: <span
-                                                        class="text-danger">${{productData.product.price}}</span>
-                                                </h4>
-                                                <h5>Quantity: <span>{{productData.product.quantity}}</span></h5>
-
-
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                                <!--  update product-->
+                                <div class="modal fade rounded" id="editProductmodal{{data.product.id }}" tabindex="-1"
+                                     aria-labelledby="editProductmodal{{data.product.id }}Label" aria-hidden="true">
+                                    <div class="modal-dialog  modal-dialog-centered">
+                                        <div class="modal-content" style="border-radius: 10px;">
+                                            <form action="{% url 'updateproduct' data.product.id %}" method="post"
+                                                  enctype="multipart/form-data">
+                                                {% csrf_token %}
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title text-dark">Edit Product</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <div class="mb-3">
+                                                                <label for="ProductSku" class="form-label">SKU:</label>
+                                                                <input type="text"
+                                                                       class="form-control"
+                                                                       style="border-radius: 10px;"
+                                                                       value="{{data.SKU}}" disabled>
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="ProductName"
+                                                                       class="form-label">ProductName</label>
+                                                                <input type="text" name="itemname" value="{{data.product.item}}"
+                                                                       class="form-control"
+                                                                       style="border-radius: 10px;" placeholder="Name"
+                                                                       required>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-6">
+                                                                    <div class="mb-3">
+                                                                        <label for="Price"
+                                                                               class="form-label">Price</label>
+                                                                        <input type="number" step="0.01"
+                                                                               name="itemprice" value="{{data.product.price}}"
+                                                                               class="form-control" placeholder="Price"
+                                                                               required>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <div class="mb-3">
+                                                                        <label for="Quantity" class="form-label">Quantity</label>
+                                                                        <input type="number" name="itemqty"
+                                                                               value="{{data.product.quantity}}"
+                                                                               class="form-control"
+                                                                               placeholder="Quantity" required>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-6">
+                                                                    <div class="mb-3">
+                                                                        <label for="Category" class="form-label">Category</label>
+                                                                        <select class="form-select"
+                                                                                name="itemcategory"
+                                                                                aria-label="category">
+                                                                            {% for data in categories %}
+                                                                            <option value="{{data.id}}">{{data.categoryName}}
+                                                                            </option>
+                                                                            {%endfor%}
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <div class="mb-3">
+                                                                        <label for="subCategory" class="form-label">subCategory</label>
+                                                                        <select class="form-select"
+                                                                                name="itemsubcategory"
+                                                                                aria-label="subcategory">
+                                                                            {% for data in subcategories %}
+                                                                            <option value="{{data.id }}">{{data.subcatgName}}
+                                                                            </option>
+                                                                            {%endfor%}
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="mb-3">
+                                                                <label for="About" class="form-label">About</label>
+                                                                <textarea class="form-control"
+                                                                          name="itemabout"
+                                                                          rows="3" required>{{data.about}}</textarea>
+                                                                <small class="form-text text-muted">maximum 150 words |
+                                                                    support
+                                                                    HTML </small>
+                                                            </div>
+
+                                                            <div class="mb-3">
+                                                                <label for="Description"
+                                                                       class="form-label">Description</label>
+                                                                <textarea class="form-control" name="itemdescription"
+                                                                          rows="3" required>{{data.description}}</textarea>
+                                                                <small class="form-text text-muted">maximum 500 words |
+                                                                    support
+                                                                    HTML </small>
+                                                            </div>
+
+                                                            <div class="mb-3">
+                                                                <label for="ProductImage" class="form-label">Product
+                                                                    Image</label>
+                                                                <input class="form-control" name="itemimg" type="file" >
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">Close
+                                                    </button>
+                                                    <button type="submit" class="btn btn-primary">Save</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                                </tbody>
+                            </table>
                         </div>
-                        {% endfor %}
                     </div>
                 </div>
             </div>
         </div>
-        <!--        modal viewdata-->
 
-
+    </div>
 </main>
-
 {% endblock %}

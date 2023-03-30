@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from django.utils import timezone
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
 
 from products.models import Category, SubCategory, Product, ProductDetail
 
@@ -14,10 +16,10 @@ def product(request):
     product = ProductDetail.objects.select_related('product').all()
     # products = Product.objects.all()
     # productdata = ProductDetail.objects.select_related('product').all()
-    context = { 'categories' : categories,
-                'subcategories' : subcategories,
-                'product' : product,
-                }
+    context = {'categories': categories,
+               'subcategories': subcategories,
+               'productList': product,
+               }
     return render(request, 'seller/products.html', context)
 
 
@@ -39,15 +41,17 @@ def addCategory(request):
         return redirect('/seller/category/')
     return render(request, 'seller/category.html')
 
-def updateCategory(request,id):
+
+def updateCategory(request, id):
     if request.method == "POST":
         catgdetails = Category.objects.get(id=id)
         categoryname = request.POST.get("updatecategory")
-        catgdetails.categoryName=categoryname
-        catgdetails.updatedOn=timezone.now()
+        catgdetails.categoryName = categoryname
+        catgdetails.updatedOn = timezone.now()
         catgdetails.save()
         return redirect('/seller/category/')
     return render(request, 'seller/categoty.html')
+
 
 def deleteCategory(request):
     if request.method == "POST":
@@ -57,14 +61,16 @@ def deleteCategory(request):
         return redirect('/seller/category/')
     return render(request, 'seller/category.html')
 
+
 def addSubCategory(request):
     if request.method == "POST":
         categoryNameId = request.POST.get("category_name")
         SubcategoryName = request.POST.get("subcategory")
-        saveSubcatg = SubCategory(subcatgName=SubcategoryName,category_id=categoryNameId)
+        saveSubcatg = SubCategory(subcatgName=SubcategoryName, category_id=categoryNameId)
         saveSubcatg.save()
         return redirect('/seller/category/')
     return render(request, 'seller/category.html')
+
 
 def deleteSubCategory(request):
     if request.method == "POST":
@@ -74,7 +80,8 @@ def deleteSubCategory(request):
         return redirect('/seller/category/')
     return render(request, 'seller/category.html')
 
-def updatesubCategory(request,id):
+
+def updatesubCategory(request, id):
     if request.method == "POST":
         subcatgdetails = SubCategory.objects.get(id=id)
         newname = request.POST.get("subcategoryname")
@@ -95,24 +102,63 @@ def Addproduct(request):
         itemsubCategoryID = request.POST.get("itemsubcategory")
         subcategory = SubCategory.objects.get(pk=itemsubCategoryID)
         itemimg = request.FILES.get("itemimg")
-        print(itemimg)
 
         itemAbout = request.POST.get("itemabout")
         itemDesc = request.POST.get("itemdescription")
         sku = request.POST.get("sku")
 
-        saveprod = Product(item=itemname,price=itemprice,quantity=itemqty,category=category,subCategory=subcategory,image=itemimg)
+        saveprod = Product(item=itemname, price=itemprice, quantity=itemqty, category=category, subCategory=subcategory,
+                           image=itemimg)
         saveprod.save()
         prod_id = saveprod.id
         product = Product.objects.get(pk=prod_id)
-        saveproddetails = ProductDetail(product = product,about=itemAbout,SKU=sku,description=itemDesc)
+        saveproddetails = ProductDetail(product=product, about=itemAbout, SKU=sku, description=itemDesc)
         saveproddetails.save()
         return redirect('/seller/products/')
     return render(request, 'seller/products.html')
 
-def deleteproduct(request,id):
-        if request.method == "POST":
-            delprod = Product.objects.get(id=id)
-            delprod.delete()
-            return redirect('/seller/products/')
-        return render(request, 'seller/products.html')
+
+def deleteproduct(request, id):
+    if request.method == "POST":
+        delprod = Product.objects.get(id=id)
+        delprod.delete()
+        return redirect('/seller/products/')
+    return render(request, 'seller/products.html')
+
+
+def updateproduct(request, id):
+    if request.method == "POST":
+        name = request.POST.get("itemname")
+        price = request.POST.get("itemprice")
+        quantity = request.POST.get("itemqty")
+        category = request.POST.get("itemcategory")
+        categoryID = Category.objects.get(pk=category)
+        subcategory = request.POST.get("itemsubcategory")
+        subcategoryID = SubCategory.objects.get(pk=subcategory)
+        about = request.POST.get("itemabout")
+        description = request.POST.get("itemdescription")
+
+        image = request.FILES.get("itemimg")
+
+        productSelect = Product.objects.get(id=id)
+        subProduct = ProductDetail.objects.get(product=id)
+
+        # if notselected take name from item
+        if image:
+            # if new update
+            productSelect.image = image
+            productSelect.save()
+        else:
+            pass
+        productSelect.item = name
+        productSelect.price = price
+        productSelect.quantity = quantity
+        productSelect.category = categoryID
+        productSelect.subCategory = subcategoryID
+        productSelect.save()
+        subProduct.about = about
+        subProduct.description = description
+        subProduct.save()
+        return redirect('/seller/products/')
+
+    return render(request, 'seller/products.html')
