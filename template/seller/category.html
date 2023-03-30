@@ -1,5 +1,5 @@
 {% extends 'seller/common.html' %}
-{% block title %} Category {% endblock %}
+{% block title %} Category-Dashboard {% endblock %}
 {% block content %}
 {% load static %}
 
@@ -38,7 +38,7 @@
                                     <div class="row">
                                         <div class="col">
                                             <div class="mb-3">
-                                                <label for="Category" class="form-label">Category</label>
+                                                <label class="form-label">Category</label>
                                                 <input type="text" class="form-control" name="addcategoryField"
                                                        placeholder="Insert category Name" required>
                                             </div>
@@ -71,7 +71,7 @@
                                     <div class="row">
                                         <div class="col">
                                             <div class="mb-3">
-                                                <label for="Category" class="form-label">Select Category</label>
+                                                <label  class="form-label">Select Category</label>
                                                 <select id="pickCategory" name="category_name" class="form-select"
                                                         aria-label="Default select example" required>
                                                     <option selected value="selecteddisable" disabled>Open this Category
@@ -83,7 +83,7 @@
                                                 </select>
                                             </div>
                                             <div class="mb-3">
-                                                <label for="subCategorys" class="form-label">Sub Category</label>
+                                                <label class="form-label">Sub Category</label>
                                                 <input type="text" id="subcategoryInput" name="subcategory"
                                                        class="form-control"
                                                        placeholder="Insert subcategory Name" required>
@@ -165,7 +165,7 @@
                                                     <div class="row">
                                                         <div class="col">
                                                             <div class="mb-3">
-                                                                <label for="Category" class="form-label">Update Category
+                                                                <label class="form-label">Update Category
                                                                     Name</label>
                                                                 <input type="text" class="form-control"
                                                                        name="updatecategory"
@@ -254,14 +254,14 @@
                                                     <div class="row">
                                                         <div class="col">
                                                             <div class="mb-3">
-                                                                <label for="Category" class="form-label">Category
+                                                                <labelclass="form-label">Category
                                                                     Name</label>
                                                                 <input type="text" class="form-control"
                                                                        name="categoryName"
                                                                        value="{{ subdata.category}}" disabled>
                                                             </div>
                                                             <div class="mb-3">
-                                                                <label for="subCategorys" class="form-label">Update Sub
+                                                                <label class="form-label">Update Sub
                                                                     Category</label>
                                                                 <input type="text" name="subcategoryname"
                                                                        class="form-control"

@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
 from django.utils import timezone
 from django.core.files.storage import default_storage
-from django.core.files.base import ContentFile
+import  os
+
+from django.utils.http import urlencode
 
 from products.models import Category, SubCategory, Product, ProductDetail
 
@@ -142,6 +144,7 @@ def updateproduct(request, id):
 
         productSelect = Product.objects.get(id=id)
         subProduct = ProductDetail.objects.get(product=id)
+
 
         # if notselected take name from item
         if image:

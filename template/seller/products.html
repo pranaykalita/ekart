@@ -1,5 +1,5 @@
 {% extends 'seller/common.html' %}
-{% block title %} Category {% endblock %}
+{% block title %} Products-Dashboard {% endblock %}
 {% block content %}
 {% load static %}
 
@@ -149,7 +149,7 @@
                                     <td>
                                         <div class="row">
                                             <div class="col-3 col-sm-12">
-                                                <div class="form-inline">
+                                                <div class="form-inline justify-content-center">
                                                     <div class="form-group mb-2">
                                                         <form action="{% url 'deleteproduct' data.product.id %}"
                                                               method="post">
