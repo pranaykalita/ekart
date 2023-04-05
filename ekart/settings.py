@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'users',
     'accounts',
     'sellers',
+    'frontend',
 
     # api
     'api',
@@ -141,6 +142,7 @@ STATIC_ROOT = BASE_DIR / 'static'
 STATICFILES_DIRS = [
     # seller
     'template/seller/static/',
+    'template/frontend/static/',
 ]
 
 # media folder for storing media files

@@ -8,7 +8,10 @@ from .views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', home),
+
+    # frontend
+
+    path('', include('frontend.urls')),
 
     # api
     path('api/',include('api.urls')),
