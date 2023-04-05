@@ -4,6 +4,7 @@ from products.models import Category, SubCategory, Product, ProductDetail
 from django.contrib.auth.decorators import login_required
 
 
+# dashboard
 @login_required(login_url='/seller/login/')
 def dashboard(request):
     productcount = Product.objects.count()
@@ -14,21 +15,9 @@ def dashboard(request):
                'catCount': catCount,
                'subCatCount': subcatCount,
                }
-    return render(request, 'seller/dashboard.html',context)
+    return render(request, 'seller/pages/dashboard.html',context)
 
-@login_required(login_url='/seller/login/')
-def product(request):
-    categories = Category.objects.all()
-    subcategories = SubCategory.objects.select_related('category').all()
-    product = ProductDetail.objects.select_related('product').all()
-    # products = Product.objects.all()
-    # productdata = ProductDetail.objects.select_related('product').all()
-    context = {'categories': categories,
-               'subcategories': subcategories,
-               'productList': product,
-               }
-    return render(request, 'seller/products.html', context)
-
+# category
 @login_required(login_url='/seller/login/')
 def category(request):
     categorylist = Category.objects.all()
@@ -37,7 +26,36 @@ def category(request):
         'categorylist': categorylist,
         'subcategorylist': subcategorylist,
     }
-    return render(request, 'seller/category.html', context)
+    return render(request, 'seller/pages/category.html', context)
+
+# products
+@login_required(login_url='/seller/login/')
+def product(request):
+    categories = Category.objects.all()
+    subcategories = SubCategory.objects.select_related('category').all()
+    product = ProductDetail.objects.select_related('product').all()
+    # products = Product.objects.all()n
+    # productdata = ProductDetail.objects.select_related('product').all()
+    context = {'categories': categories,
+               'subcategories': subcategories,
+               'productList': product,
+               'segment': 'SellerProduct',
+               }
+    return render(request, 'seller/pages/products.html', context)
+
+# orders
+# @login_required(login_url='/seller/login/')
+def orders(request):
+    return render(request, 'seller/pages/orders.html')
+
+# invoices
+def invoice(request):
+    return render(request, 'seller/pages/invoices.html')
+
+# messages
+def Messages(request):
+    return render(request, 'seller/pages/messages.html')
+
 
 @login_required(login_url='/seller/login/')
 def addCategory(request):
@@ -46,7 +64,7 @@ def addCategory(request):
         savecatg = Category(categoryName=categoryName)
         savecatg.save()
         return redirect('/seller/category/')
-    return render(request, 'seller/category.html')
+    return render(request, 'seller/pages/category.html')
 
 @login_required(login_url='/seller/login/')
 def updateCategory(request, id):
@@ -57,7 +75,7 @@ def updateCategory(request, id):
         catgdetails.updatedOn = timezone.now()
         catgdetails.save()
         return redirect('/seller/category/')
-    return render(request, 'seller/categoty.html')
+    return render(request, 'seller/pages/categoty.html')
 
 @login_required(login_url='/seller/login/')
 def deleteCategory(request):
@@ -66,7 +84,7 @@ def deleteCategory(request):
         delcatg = Category.objects.get(id=categoryId)
         delcatg.delete()
         return redirect('/seller/category/')
-    return render(request, 'seller/category.html')
+    return render(request, 'seller/pages/category.html')
 
 @login_required(login_url='/seller/login/')
 def addSubCategory(request):
@@ -76,7 +94,7 @@ def addSubCategory(request):
         saveSubcatg = SubCategory(subcatgName=SubcategoryName, category_id=categoryNameId)
         saveSubcatg.save()
         return redirect('/seller/category/')
-    return render(request, 'seller/category.html')
+    return render(request, 'seller/pages/category.html')
 
 @login_required(login_url='/seller/login/')
 def deleteSubCategory(request):
@@ -85,7 +103,7 @@ def deleteSubCategory(request):
         delsubcatg = SubCategory.objects.get(id=subcategoryID)
         delsubcatg.delete()
         return redirect('/seller/category/')
-    return render(request, 'seller/category.html')
+    return render(request, 'seller/pages/category.html')
 
 @login_required(login_url='/seller/login/')
 def updatesubCategory(request, id):
@@ -96,7 +114,7 @@ def updatesubCategory(request, id):
         subcatgdetails.updatedOn = timezone.now()
         subcatgdetails.save()
         return redirect('/seller/category/')
-    return render(request, 'seller/categoty.html')
+    return render(request, 'seller/pages/categoty.html')
 
 @login_required(login_url='/seller/login/')
 def Addproduct(request):
@@ -122,7 +140,7 @@ def Addproduct(request):
         saveproddetails = ProductDetail(product=product, about=itemAbout, SKU=sku, description=itemDesc)
         saveproddetails.save()
         return redirect('/seller/products/')
-    return render(request, 'seller/products.html')
+    return render(request, 'seller/pages/products.html')
 
 @login_required(login_url='/seller/login/')
 def deleteproduct(request, id):
@@ -130,7 +148,7 @@ def deleteproduct(request, id):
         delprod = Product.objects.get(id=id)
         delprod.delete()
         return redirect('/seller/products/')
-    return render(request, 'seller/products.html')
+    return render(request, 'seller/pages/products.html')
 
 @login_required(login_url='/seller/login/')
 def updateproduct(request, id):
@@ -169,4 +187,4 @@ def updateproduct(request, id):
         subProduct.save()
         return redirect('/seller/products/')
 
-    return render(request, 'seller/products.html')
+    return render(request, 'seller/pages/products.html')

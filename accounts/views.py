@@ -8,7 +8,7 @@ from django.contrib.auth import logout
 
 # seller register
 def sellerRegister(request):
-    return render(request,'seller/sellerRegister.html')
+    return render(request,'seller/pages/sellerRegister.html')
 # seller Login
 def sellerlogin(request):
     if request.user.is_authenticated:
@@ -23,8 +23,8 @@ def sellerlogin(request):
                 auth.login(request, user)
                 return redirect('/seller/dashboard')
             else:
-                return render(request, 'seller/sellerlogin.html')
-        return render(request, 'seller/sellerlogin.html')
+                return render(request, 'seller/pages/sellerlogin.html')
+        return render(request, 'seller/pages/sellerlogin.html')
 def sellerlogout(request):
     auth.logout(request)
     return redirect('/seller/login')

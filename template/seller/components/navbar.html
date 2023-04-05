@@ -24,7 +24,8 @@
 <!--fontawsome + datatables-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/css/dataTables.bootstrap4.min.css"/>
-    <!--    <link rel="stylesheet" href="{% static 'datatables/dataTables.bootstrap4.min.css' %}">-->
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.dataTables.min.css">
+<!--    <link rel="stylesheet" href="https://cdn.datatables.net/rowreorder/1.3.3/css/rowReorder.dataTables.min.css">-->
 
 
 </head>
@@ -53,28 +54,28 @@
                     <a class="sidebar-link" href="{% url 'category' %}">
                         <i class="align-middle" data-feather="user"></i> <span class="align-middle">category</span>
                     </a>
-                </li>
-                <li class="sidebar-item  {% if request.path == products %}active{% endif %}">
+                </li>"
+                <li class="sidebar-item  {% if segment == 'SellerProduct' %}active{% endif %}">
                     <a class="sidebar-link" href="{% url 'products' %}">
                         <i class="align-middle" data-feather="user"></i> <span class="align-middle">Products</span>
                     </a>
                 </li>
 
-                <li class="sidebar-item  {% if request.path == Orders %}active{% endif %}">
-                    <a class="sidebar-link" href="{% url 'dashboard' %}">
+                <li class="sidebar-item  {% if request.path == orders %}active{% endif %}">
+                    <a class="sidebar-link" href="{% url 'orders' %}">
                         <i class="align-middle" data-feather="log-in"></i> <span class="align-middle">Orders</span>
                     </a>
                 </li>
 
                 <li class="sidebar-item  {% if request.path == invoices %}active{% endif %}">
-                    <a class="sidebar-link" href="{% url 'dashboard' %}">
+                    <a class="sidebar-link" href="{% url 'invoice' %}">
                         <i class="align-middle" data-feather="user-plus"></i> <span
                             class="align-middle">Invoices</span>
                     </a>
                 </li>
 
                 <li class="sidebar-item  {% if request.path == messages %}active{% endif %}">
-                    <a class="sidebar-link" href="{% url 'dashboard' %}">
+                    <a class="sidebar-link" href="{% url 'messages' %}">
                         <i class="align-middle" data-feather="book"></i> <span class="align-middle">Messages</span>
                     </a>
                 </li>
@@ -320,6 +321,8 @@
 <!--dataTables-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/jquery.dataTables.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.4.1/js/dataTables.responsive.min.js"></script>
+<!--<script src="https://cdn.datatables.net/rowreorder/1.3.3/js/dataTables.rowReorder.min.js"></script>-->
 
 </body>
 

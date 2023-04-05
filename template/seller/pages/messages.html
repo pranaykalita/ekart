@@ -1,0 +1,101 @@
+{% extends 'seller/components/navbar.html' %}
+{% block title %} Messages {% endblock %}
+{% block content %}
+<main class="content">
+    <div class="container-fluid p-0">
+        <h1 class="h3 mb-3">All Messages</h1>
+
+        <div class="row">
+            <div class="col-5">
+
+                <div class="card shadow-sm rounded-3 p-2">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-3">
+                                <img alt="img_user_msg"
+                                     class="rounded-circle"
+                                     src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2275%22%20height%3D%2275%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2075%2075%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_187535e424b%20text%20%7B%20fill%3Argba(255%2C255%2C255%2C.75)%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A10pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_187535e424b%22%3E%3Crect%20width%3D%2275%22%20height%3D%2275%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2219.302682876586914%22%20y%3D%2242%22%3E75x75%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E">
+                            </div>
+                            <div class="col-9">
+                                <div class="row">
+                                    <div class="col-7">
+                                        <h4 class="font-weight-bold">Card title</h4></div>
+                                    <div class="col-5">
+                                        <span class="badge badge-pill badge-primary float-end">New</span></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h6 class="text-muted float-right">3 jan 2023</h6>
+                                        <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                                    </div>
+                                    <div class="col-12">
+                                        <p class="card-text">Some quick example text to build on the
+                                            card title and make up the bulk of the card's .....</p>
+                                        <a class="btn btn-primary" href="#">View Message</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!--read Message Single-->
+            <div class="col-7 shadow-sm p-3">
+                <div class="card rounded-2">
+                    <div class="card-body shadow-sm">
+                        <div class="row">
+                            <div class="col-4">
+                                <img alt="selectedImg" src="">
+                            </div>
+                            <div class="col-8">
+                                <h5 class="text-muted float-right">12 Jan 2023</h5>
+                                <div class="card-title">CardTitle</div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h6 class="card-subtitle text-muted">Card Title</h6>
+                                    </div>
+                                    <div class="col-12">
+                                        <p>card title and make up the bulk of the card'card title and make up the bulk
+                                            of the card'card title and make up the bulk of the card'</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="table-responsive">
+                    <table class="table table-hover text-center" id="dataTable">
+                        <thead>
+                        <tr>
+                            <th>From</th>
+                            <th>Subject</th>
+                            <th>Message</th>
+                            <th>Date</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+
+                            <td><span class="badge badge-pill badge-success mx-2">New</span>Pranay</td>
+                            <td>subject message</td>
+                            <td>messagemessagemessage.....</td>
+                            <td>12 jan 23</td>
+                            <td><a href="#" class="btn btn-success">View Message</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+{% endblock %}
+

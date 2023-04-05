@@ -1,6 +1,10 @@
 from django.urls import path
 from .views import *
 
+
+
+
+
 urlpatterns = [
 
     # seller Dashbaord
@@ -8,6 +12,12 @@ urlpatterns = [
     path('dashboard/', dashboard, name="dashboard"),
     # category
     path('category/', category, name="category"),
+    # orders
+    path('orders/', orders, name="orders"),
+    # invoice
+    path('invoice/', invoice, name="invoice"),
+    # messages
+    path('Messages/', Messages, name="messages"),
 
     # category CRUD
     path('addcategory/', addCategory, name="addcategory"),
