@@ -1,23 +1,29 @@
 from django.shortcuts import render
 from rest_framework import generics
-from api.serializers import *
+from rest_framework.generics import GenericAPIView
+from  rest_framework.mixins import RetrieveModelMixin,ListModelMixin
+
 from products.models import *
+from .serializers import *
+
+class ProductApiview(ListModelMixin,GenericAPIView):
+	queryset = Product.objects.select_related('productdetail').all()
+	serializer_class = ProductSerializer
+	def get(self, request, *args, **kwargs):
+		return self.list(request, *args, **kwargs)
+
+class ProductsRetriveApiview(GenericAPIView,RetrieveModelMixin):
+	queryset = Product.objects.select_related('productdetail').all()
+	serializer_class = ProductSerializer
+	lookup_field = 'id'
+	def get(self, request, *args, **kwargs):
+		return self.retrieve(request, *args, **kwargs)
 
 
-class productApiView(generics.ListCreateAPIView):
-    queryset = Product.objects.all()
-    serializer_class = ProductSrializer
 
-class productDataApiView(generics.ListCreateAPIView):
-    queryset = ProductDetail.objects.all()
-    serializer_class = ProductDataSrializer
+class CategoryApiview(ListModelMixin,GenericAPIView):
+	queryset = Category.objects.select_related('SubCategory').all()
+	serializer_class = CategorySerializer
+	def get(self, request,*args,**kwargs):
+		return self.list(request,*args, **kwargs)
 
-
-class CategoryApiView(generics.ListCreateAPIView):
-    queryset = Category.objects.all()
-    serializer_class = CategorySrializer
-
-
-class SubCategoryApiView(generics.ListCreateAPIView):
-    queryset = SubCategory.objects.all()
-    serializer_class = SubCategorySrializer

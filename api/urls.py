@@ -1,12 +1,13 @@
-from django.urls import path
+from django.urls import path, include
 from .views import *
 
 urlpatterns = [
-    # seller Dashbaord
-    # path('products/', productApiView.as_view()),
-    path('products/', productApiView.as_view(), name="productApi"),
-    path('productdata/', productDataApiView.as_view(),name="productDataApi" ),
-    path('category/', CategoryApiView.as_view(),name="categoryApi" ),
-    path('subcategory/', SubCategoryApiView.as_view(),name="subcategoryApi" ),
+    path('products/', ProductApiview.as_view()),
+    path('products/<int:id>/', ProductsRetriveApiview.as_view()),
 
-]
+    path('category/', CategoryApiview.as_view()),
+
+
+
+
+    ]
