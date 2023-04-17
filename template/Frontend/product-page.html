@@ -112,10 +112,10 @@
 
             <div class="mb-3">
               <a href="">
-                <span class="badge purple mr-1">Category 2</span>
+                <span class="badge purple mr-1">{{product.category.categoryName}}</span>
               </a>
               <a href="">
-                <span class="badge blue mr-1">New</span>
+                <span class="badge blue mr-1">{{product.subCategory.subcatgName}}</span>
               </a>
               <a href="">
                 <span class="badge red mr-1">Bestseller</span>
@@ -123,17 +123,11 @@
             </div>
 
             <p class="lead">
-              <span class="mr-1">
-                <del>$200</del>
-              </span>
-              <span>$100</span>
+              <span>{{product.price}}</span>
             </p>
 
             <p class="lead font-weight-bold">Description</p>
-
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Et dolor suscipit libero eos atque quia ipsa
-              sint voluptatibus!
-              Beatae sit assumenda asperiores iure at maxime atque repellendus maiores quia sapiente.</p>
+            <p>{{product.productdetail.description | safe}}</p>
 
             <form class="d-flex justify-content-left">
               <!-- Default input -->

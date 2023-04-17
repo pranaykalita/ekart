@@ -5,13 +5,13 @@ from products.models import *
 class SubcategorySerializer(serializers.ModelSerializer):
 	class Meta:
 		model = SubCategory
-		fields = '__all__'
+		fields = ['subcatgName']
 
 class CategorySerializer(serializers.ModelSerializer):
-	SubCategory = SubcategorySerializer()
+	# subcategory = SubcategorySerializer()
 	class Meta:
 		model = Category
-		fields = '__all__'
+		fields = ['categoryName']
 
 class productDetailserialiizer(serializers.ModelSerializer):
 	class Meta:
@@ -21,7 +21,9 @@ class productDetailserialiizer(serializers.ModelSerializer):
 
 class ProductSerializer(serializers.ModelSerializer):
 	productdetail = productDetailserialiizer()
+	category = CategorySerializer()
+	subCategory = SubcategorySerializer()
 	class Meta:
 		model = Product
-		fields = '__all__'
+		fields = ['item','price','quantity','image','category','subCategory','productdetail']
 		

@@ -7,13 +7,13 @@ from products.models import *
 from .serializers import *
 
 class ProductApiview(ListModelMixin,GenericAPIView):
-	queryset = Product.objects.select_related('productdetail').all()
+	queryset = Product.objects.select_related('productdetail','category','subCategory').all()
 	serializer_class = ProductSerializer
 	def get(self, request, *args, **kwargs):
 		return self.list(request, *args, **kwargs)
 
 class ProductsRetriveApiview(GenericAPIView,RetrieveModelMixin):
-	queryset = Product.objects.select_related('productdetail').all()
+	queryset = Product.objects.select_related('productdetail','category','subCategory').all()
 	serializer_class = ProductSerializer
 	lookup_field = 'id'
 	def get(self, request, *args, **kwargs):
@@ -22,7 +22,7 @@ class ProductsRetriveApiview(GenericAPIView,RetrieveModelMixin):
 
 
 class CategoryApiview(ListModelMixin,GenericAPIView):
-	queryset = Category.objects.select_related('SubCategory').all()
+	queryset = Category.objects.all()
 	serializer_class = CategorySerializer
 	def get(self, request,*args,**kwargs):
 		return self.list(request,*args, **kwargs)
