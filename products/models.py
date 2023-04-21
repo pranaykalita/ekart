@@ -1,7 +1,5 @@
 from django.db import models
-from django.utils import timezone
-from sellers import models as sellers
-
+from PIL import Image
 # Create your models here.
 
 # category
@@ -30,7 +28,34 @@ class Product(models.Model):
     quantity = models.IntegerField()
     category = models.ForeignKey(Category,on_delete=models.CASCADE)
     subCategory = models.ForeignKey(SubCategory,on_delete=models.CASCADE)
+
     image = models.ImageField(upload_to='media/productimg')
+
+    # resize the image to set size on script
+    def save(self):
+        super().save()  # saving image first
+
+        img = Image.open(self.image.path)  # Open image using self
+        width, height = img.size
+
+        if img.height > 500 or img.width > 500:
+            ratio = min(500 / width, 500 / height)
+        elif img.height < 500 or img.width < 500:
+            ratio = 1
+
+        new_width = round(width * ratio)
+        new_height = round(height * ratio)
+
+        # resize the image
+        img = img.resize((new_width, new_height), Image.ANTIALIAS)
+
+        # create a new image with the target size, centered on a black background
+        background = Image.new('RGBA', (500, 500), (0, 0, 0, 255))
+        x = (500 - new_width) // 2
+        y = (500 - new_height) // 2
+        background.paste(img, (x, y))
+
+        img.save(self.image.path)
 
     def __str__(self):
         return self.item

@@ -19,10 +19,13 @@ def homepage(request):
     return render(request, 'Frontend/pages/home.html', context)
 
 
-def product(request, id):
+def singleproduct(request, id):
     url = 'http://127.0.0.1:8000/api/products/' + id
     producturl = requests.get(url)
     products = producturl.json()
     context = {'product': products}
     print(context)
-    return render(request, 'Frontend/Backup_/product-page.html', context)
+    return render(request, 'Frontend/pages/singleprod.html', context)
+
+def testpage(request):
+    return render(request,'Frontend/pages/singleprod.html')

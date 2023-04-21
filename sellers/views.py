@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.utils import timezone
 from products.models import Category, SubCategory, Product, ProductDetail
 from django.contrib.auth.decorators import login_required
-
+from products.productresize import resizeProduct_image as resize_image
 
 # dashboard
 @login_required(login_url='/seller/login/')
@@ -41,7 +41,7 @@ def product(request):
                'productList': product,
                'segment': 'SellerProduct',
                }
-    return render(request, 'seller/pages/product.html', context)
+    return render(request, 'seller/pages/products.html', context)
 
 # orders
 # @login_required(login_url='/seller/login/')
@@ -140,7 +140,7 @@ def Addproduct(request):
         saveproddetails = ProductDetail(product=product, about=itemAbout, SKU=sku, description=itemDesc)
         saveproddetails.save()
         return redirect('/seller/products/')
-    return render(request, 'seller/pages/product.html')
+    return render(request, 'seller/pages/products.html')
 
 @login_required(login_url='/seller/login/')
 def deleteproduct(request, id):
@@ -148,7 +148,7 @@ def deleteproduct(request, id):
         delprod = Product.objects.get(id=id)
         delprod.delete()
         return redirect('/seller/products/')
-    return render(request, 'seller/pages/product.html')
+    return render(request, 'seller/pages/products.html')
 
 @login_required(login_url='/seller/login/')
 def updateproduct(request, id):
@@ -187,4 +187,4 @@ def updateproduct(request, id):
         subProduct.save()
         return redirect('/seller/products/')
 
-    return render(request, 'seller/pages/product.html')
+    return render(request, 'seller/pages/products.html')

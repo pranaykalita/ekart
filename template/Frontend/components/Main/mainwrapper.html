@@ -1,6 +1,8 @@
+{% extends 'Frontend/components/Main/base.html' %}
 {% load static %}
-<div class="main-wrapper">
 
+{%block wrapper%}
+<div class="main-wrapper">
     <!--Head-->
     {% include 'Frontend/components/common/head.html'%}
     <!--head end-->
@@ -9,13 +11,13 @@
     {% include 'Frontend/components/Main/offcanvas.html'%}
     <!-- OffCanvas Menu End -->
 
-    <!-- BLOCK EXTEND START    -->
-    {% block homepage %}
+    <!--    block EXTEND PAGE-->
+    {% block content %}
     {% endblock %}
-    <!--BLOCK EXTEND END-->
+    <!--    block EXTEND PAGE END-->
 
     <!-- Footer Area Start -->
     {% include 'Frontend/components/common/footerarea.html' %}
     <!-- Footer Area End -->
-
 </div>
+{%endblock%}
