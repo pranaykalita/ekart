@@ -1,0 +1,21 @@
+{% load static %}
+<div class="main-wrapper">
+
+    <!--Head-->
+    {% include 'Frontend/components/common/head.html'%}
+    <!--head end-->
+
+    <!-- offcanvas overlay start -->
+    {% include 'Frontend/components/Main/offcanvas.html'%}
+    <!-- OffCanvas Menu End -->
+
+    <!-- BLOCK EXTEND START    -->
+    {% block homepage %}
+    {% endblock %}
+    <!--BLOCK EXTEND END-->
+
+    <!-- Footer Area Start -->
+    {% include 'Frontend/components/common/footerarea.html' %}
+    <!-- Footer Area End -->
+
+</div>

@@ -140,9 +140,8 @@ STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'static'
 
 STATICFILES_DIRS = [
-    # seller
     'template/seller/static/',
-    'template/Frontend/static/',
+    'template/Frontend/assets/',
 ]
 
 # media folder for storing media files
