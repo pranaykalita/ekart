@@ -54,7 +54,7 @@
                     <a class="sidebar-link" href="{% url 'category' %}">
                         <i class="align-middle" data-feather="user"></i> <span class="align-middle">category</span>
                     </a>
-                </li>"
+                </li>
                 <li class="sidebar-item  {% if segment == 'SellerProduct' %}active{% endif %}">
                     <a class="sidebar-link" href="{% url 'products' %}">
                         <i class="align-middle" data-feather="user"></i> <span class="align-middle">Products</span>
@@ -100,11 +100,9 @@
             </ul>
 
             <div class="sidebar-cta">
-                <li class="sidebar-item">
                     <a class="sidebar-link" href="{% url 'sellerlogout' %}">
                         <i class="align-middle" data-feather="log-in"></i> <span class="align-middle">Logout</span>
                     </a>
-                </li>
             </div>
         </div>
     </nav>

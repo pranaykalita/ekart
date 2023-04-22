@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect
 from django.utils import timezone
 from products.models import Category, SubCategory, Product, ProductDetail
 from django.contrib.auth.decorators import login_required
-from products.productresize import resizeProduct_image as resize_image
 
 # dashboard
 @login_required(login_url='/seller/login/')
@@ -44,19 +43,21 @@ def product(request):
     return render(request, 'seller/pages/products.html', context)
 
 # orders
-# @login_required(login_url='/seller/login/')
+@login_required(login_url='/seller/login/')
 def orders(request):
     return render(request, 'seller/pages/orders.html')
 
 # invoices
+@login_required(login_url='/seller/login/')
 def invoice(request):
     return render(request, 'seller/pages/invoices.html')
 
 # messages
+@login_required(login_url='/seller/login/')
 def Messages(request):
     return render(request, 'seller/pages/messages.html')
 
-
+# addCategory
 @login_required(login_url='/seller/login/')
 def addCategory(request):
     if request.method == "POST":
@@ -66,6 +67,7 @@ def addCategory(request):
         return redirect('/seller/category/')
     return render(request, 'seller/pages/category.html')
 
+# Update Category
 @login_required(login_url='/seller/login/')
 def updateCategory(request, id):
     if request.method == "POST":
@@ -77,6 +79,7 @@ def updateCategory(request, id):
         return redirect('/seller/category/')
     return render(request, 'seller/pages/categoty.html')
 
+# Delete Category
 @login_required(login_url='/seller/login/')
 def deleteCategory(request):
     if request.method == "POST":
@@ -86,6 +89,7 @@ def deleteCategory(request):
         return redirect('/seller/category/')
     return render(request, 'seller/pages/category.html')
 
+# Add Sub Category
 @login_required(login_url='/seller/login/')
 def addSubCategory(request):
     if request.method == "POST":
@@ -96,6 +100,7 @@ def addSubCategory(request):
         return redirect('/seller/category/')
     return render(request, 'seller/pages/category.html')
 
+# Delete Sub Category
 @login_required(login_url='/seller/login/')
 def deleteSubCategory(request):
     if request.method == "POST":
@@ -105,6 +110,7 @@ def deleteSubCategory(request):
         return redirect('/seller/category/')
     return render(request, 'seller/pages/category.html')
 
+# Update Sub Category
 @login_required(login_url='/seller/login/')
 def updatesubCategory(request, id):
     if request.method == "POST":
@@ -116,6 +122,7 @@ def updatesubCategory(request, id):
         return redirect('/seller/category/')
     return render(request, 'seller/pages/categoty.html')
 
+# Add Products
 @login_required(login_url='/seller/login/')
 def Addproduct(request):
     if request.method == "POST":
@@ -142,6 +149,7 @@ def Addproduct(request):
         return redirect('/seller/products/')
     return render(request, 'seller/pages/products.html')
 
+# Delete Products
 @login_required(login_url='/seller/login/')
 def deleteproduct(request, id):
     if request.method == "POST":
@@ -150,6 +158,7 @@ def deleteproduct(request, id):
         return redirect('/seller/products/')
     return render(request, 'seller/pages/products.html')
 
+# Update Products
 @login_required(login_url='/seller/login/')
 def updateproduct(request, id):
     if request.method == "POST":

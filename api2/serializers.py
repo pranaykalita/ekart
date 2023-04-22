@@ -1,7 +1,6 @@
 from rest_framework import serializers
 from products.models import *
-from accounts.models import accountUser
-
+from accounts.models import *
 
 # SubcategorySerializer
 class SubcategorySerializer(serializers.ModelSerializer):
@@ -38,11 +37,10 @@ class ProductSerializer(serializers.ModelSerializer):
         fields = ['id', 'item', 'price', 'quantity', 'category', 'subCategory','product', 'image']
 
 
-# Lsit username And Email of Registered User
-
-class UserAccountSerializer(serializers.ModelSerializer):
+# Lsit accounts
+class AccountSerializer(serializers.ModelSerializer):
     class Meta:
-        model = accountUser
+        model = customerUser
         fields = ['username', 'email']
 
 

@@ -1,29 +1,27 @@
 from django.shortcuts import render,redirect
-from django.contrib import messages
-
-from django.contrib.auth.models import User,auth
-from django.contrib.auth import authenticate, login
-
-from .models import accountUser
-
+from django.contrib.auth import authenticate, login ,logout
+from .models import *
+from django.contrib.auth.decorators import login_required
 # account Register Customer
 
-# Login REGISTER
+# Customer Login Register
 def loginRegisterView(request):
     # signup USER
     if 'signup' in request.POST:
         if request.method == "POST":
             username = request.POST['user-name']
-            name = request.POST['user-Fullname']
+            firstname = request.POST['user-firstname']
+            lastname = request.POST['user-lastname']
             password = request.POST['user-password']
             email = request.POST['user-email']
-            account = accountUser(
-                name=name,
+            customerUser.objects.create_user(
+                firstname=firstname,
+                lastname =lastname,
                 email=email,
                 password=password,
                 username=username
             )
-            account.save()
+            # account.save()
             return redirect('frontendhome')
 
     #     login ACCOUNT
@@ -36,27 +34,71 @@ def loginRegisterView(request):
 
 
 
-
-
 # seller register
 def sellerRegister(request):
+    if request.method == "POST":
+        username = request.POST.get('username')
+        firstname = request.POST.get('firstname')
+        lastname = request.POST.get('lastname')
+        password = request.POST.get('password')
+        email = request.POST.get('email')
+
+        # Check if user already exists
+        if customerUser.objects.filter(email=email).exists():
+            print("exist alrady")
+            return redirect('registerseller')
+
+        seller  = customerUser.objects.create_seller(
+            firstname=firstname,
+            lastname=lastname,
+            email=email,
+            password=password,
+            username=username,
+            is_seller = True
+        )
+        # seller.save()
+        # sellerid = seller.id
+        # seller_name = customerUser.objects.get(pk=sellerid)
+
+        gender = request.POST.get('gender')
+        ccode = request.POST.get('ccode')
+        phone = request.POST.get('phone')
+        profileIMG = request.FILES.get('profileImg')
+
+        seller.customer.create(
+            gender = gender,
+            countrycode = ccode,
+            mobileno = phone,
+            profileimg = profileIMG,
+        )
+        # seller_data.save()
+        return redirect('sellerlogin')
+
     return render(request,'seller/pages/sellerRegister.html')
+
 # seller Login
+
+# @login_required(login_url='/seller/login/')
 def sellerlogin(request):
     if request.user.is_authenticated:
         return redirect('/seller/dashboard')
     else:
-        # return redirect('/')
         if request.method == "POST":
-            username = request.POST.get("username")
+            email = request.POST.get("email")
             password = request.POST.get("password")
-            user = auth.authenticate(username=username, password=password)
-            if user is not None:
-                auth.login(request, user)
+            seller = authenticate(request, email=email, password=password)
+
+            print(email,password)
+            if seller is not None and seller.is_seller:
+                print('insdide if not none')
+                login(request, seller)
                 return redirect('/seller/dashboard')
+
             else:
+                print('returning else part')
                 return render(request, 'seller/pages/sellerlogin.html')
         return render(request, 'seller/pages/sellerlogin.html')
+
 def sellerlogout(request):
-    auth.logout(request)
+    logout(request)
     return redirect('/seller/login')

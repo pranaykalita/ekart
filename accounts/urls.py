@@ -4,9 +4,10 @@ from .views import *
 urlpatterns = [
 
     # login-SELLER
-    path('login/', sellerlogin, name="login"),
+    path('login/', sellerlogin, name="sellerlogin"),
     path('logout/', sellerlogout, name="sellerlogout"),
+
     #     SIGNUP-seller
-    path('registeraccount/',sellerRegister,name="registerseller"),
+    path('createaccount/',sellerRegister,name="registerseller"),
 
 ]
