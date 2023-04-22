@@ -2,30 +2,32 @@ from django.shortcuts import render
 import requests
 
 
-# Create your views here.
 
-def homepage(request):
-    # fetch category
-    category_response = requests.get('http://localhost:8000/api/category/')
+# Lsit all Product
+def homepageView(request):
+    # fetch category And SubCategory
+    category_response = requests.get('http://127.0.0.1:8000/api2/categorylist/')
     category = category_response.json()
 
     # fetch product
-    product_response = requests.get('http://127.0.0.1:8000/api/products')
+    product_response = requests.get('http://127.0.0.1:8000/api2/products/')
     products = product_response.json()
-    context = {'category': category,
+
+    context = {'categories': category,
                'products': products}
 
     # return render(request, 'Frontend/Backup_/home-page.html',context)
     return render(request, 'Frontend/pages/home.html', context)
 
 
-def singleproduct(request, id):
-    url = 'http://127.0.0.1:8000/api/products/' + id
+# single Product
+def singleproductView(request, id):
+    url = 'http://127.0.0.1:8000/api2/product/item/' + id
     producturl = requests.get(url)
     products = producturl.json()
     context = {'product': products}
     print(context)
     return render(request, 'Frontend/pages/singleprod.html', context)
 
-def testpage(request):
+def prdouctView(request):
     return render(request,'Frontend/pages/singleprod.html')

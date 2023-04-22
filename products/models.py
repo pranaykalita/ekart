@@ -13,7 +13,7 @@ class Category(models.Model):
 
 # categoryid
 class SubCategory(models.Model):
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE,related_name='subcategories')
     subcatgName = models.CharField(max_length=50,default="")
     createdOn = models.DateTimeField(auto_now_add=True)
     updatedOn = models.DateTimeField(auto_now=True)
@@ -26,8 +26,8 @@ class Product(models.Model):
     item = models.CharField(max_length=100)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     quantity = models.IntegerField()
-    category = models.ForeignKey(Category,on_delete=models.CASCADE)
-    subCategory = models.ForeignKey(SubCategory,on_delete=models.CASCADE)
+    category = models.ForeignKey(Category,on_delete=models.CASCADE,related_name='productcategories')
+    subCategory = models.ForeignKey(SubCategory,on_delete=models.CASCADE,related_name='productsubcategories')
 
     image = models.ImageField(upload_to='media/productimg')
 
@@ -61,7 +61,7 @@ class Product(models.Model):
         return self.item
 
 class ProductDetail(models.Model):
-    product = models.OneToOneField(Product, on_delete=models.CASCADE)
+    product = models.OneToOneField(Product, on_delete=models.CASCADE,related_name='product')
     about = models.TextField()
     SKU = models.CharField(max_length=100,default="")
     description = models.TextField()

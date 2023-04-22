@@ -1,5 +1,7 @@
 
-.butbtnprodindex{
+a.butbtnprodindex{
+    appearance: button;
+    display: flex;
     align-items: center;
     background-color: #266bf9;
     justify-content: center;
@@ -10,7 +12,7 @@
     font-weight: 300;
     letter-spacing: 1.2px;
 }
-.butbtnprodindex:hover{
+a.butbtnprodindex:hover{
  background-color: #black;
  letter-spacing: 5px;
  font-weight: 600;

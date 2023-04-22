@@ -36,8 +36,7 @@ class ProductbyCategoryApiview(ListModelMixin,GenericAPIView):
 	def get(self, request, *args, **kwargs):
 		return self.list(request, *args, **kwargs)
 
-
-# categoryAPI
+# show categoryAPI with subctegory
 class CategoryApiview(ListModelMixin,GenericAPIView):
 	queryset = Category.objects.all()
 	serializer_class = CategorySerializer
