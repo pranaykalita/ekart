@@ -7,10 +7,6 @@ urlpatterns = [
     path('', homepageView,name="frontendhome"),
     path('product/item/<str:id>/', singleproductView,name="frontendprodutsingle"),
 
-    path('login/', loginRegisterView, name="frontendlogin"),
-
-
-
-
+    path('test', testv)
 
 ]

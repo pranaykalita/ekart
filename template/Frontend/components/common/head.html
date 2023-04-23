@@ -13,9 +13,13 @@
                     <div class="top-nav">
                         <ul>
                             <li><a href="tel:0123456789"><i class="fa fa-phone"></i> +012 3456 789</a></li>
-                            <li><a href="mailto:demo@example.com"><i class="fa fa-envelope-o"></i> demo@example.com</a>
                             </li>
-                            <li><a href="{% url 'frontendlogin' %}"><i class="fa fa-user"></i> Account</a></li>
+                            {% if user.is_authenticated %}
+                            <li><a href="{% url 'customerlogin' %}"><i class="fa fa-user"></i> {{user.username}}</a></li>
+                            <li><a href="{% url 'globallogout' %}"><i class="fa fa-sign-out"></i> Logout</a></li>
+                            {% else %}
+                            <li><a href="{% url 'customerRegister' %}"><i class="fa fa-user"></i> Login/SignUp</a></li>
+                            {% endif %}
                         </ul>
                     </div>
                 </div>
@@ -30,7 +34,7 @@
             <div class="row justify-content-between align-items-center">
                 <div class="col-lg-3 col">
                     <div class="header-logo">
-                        <a href="index.html"><img alt="Site Logo" src="{% static 'images/logo/logo.png' %}"/></a>
+                        <a href="{% url 'frontendhome' %}"><img alt="Site Logo" src="{% static 'images/logo/logo.png' %}"/></a>
                     </div>
                 </div>
                 <div class="col-lg-6 d-none d-lg-block">
@@ -71,7 +75,7 @@
             <div class="row justify-content-between align-items-center">
                 <div class="col-lg-3 col">
                     <div class="header-logo">
-                        <a href="index.html"><img alt="Site Logo" src="{% static 'images/logo/logo.png' %}"/></a>
+                        <a href="#"><img alt="Site Logo" src="{% static 'images/logo/logo.png' %}"/></a>
                     </div>
                 </div>
                 <div class="col-lg-6 d-none d-lg-block">
@@ -112,12 +116,6 @@
             <div class="header-nav">
                 <div class="main-menu position-relative">
                     <ul>
-                        {% if user.is_authenticated %}
-                        <p>Welcome, {{ user.username }}!</p>
-                        {% else %}
-                        <p>Welcome, Guest!</p>
-                        {% endif %}
-
                         {%for category in categories %}
                         <li class="dropdown">
                             <a href="#">{{category.categoryName}} <i class="fa fa-angle-down"></i></a>

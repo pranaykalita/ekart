@@ -3,11 +3,17 @@ from .views import *
 
 urlpatterns = [
 
-    # login-SELLER
-    path('login/', sellerlogin, name="sellerlogin"),
-    path('logout/', sellerlogout, name="sellerlogout"),
+    # Global Logout
+    path('logout/', logoutSession, name="globallogout"),
 
-    #     SIGNUP-seller
-    path('createaccount/',sellerRegister,name="registerseller"),
+    # login-SELLER
+    path('seller/login/', sellerlogin, name="sellerlogin"),
+    # login Customer
+    path('customer/login/', loginRegisterView, name="customerlogin"),
+
+    # Register seller
+    path('seller/createaccount/', sellerRegister, name="sellerregister"),
+    # Register Customer
+    path('customer/createaccount/', loginRegisterView, name="customerRegister")
 
 ]

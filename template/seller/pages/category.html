@@ -27,7 +27,7 @@
                      id="addcategoryModal" tabindex="-1">
                     <div class="modal-dialog  modal-dialog-centered">
                         <div class="modal-content">
-                            <form action="{% url 'addcategory' %}" method="post">
+                            <form action="{% url 'selleraddcategory' %}" method="post">
                                 {% csrf_token %}
                                 <div class="modal-header">
                                     <h1 class="modal-title text-dark" id="addcategoryModalLabel">Add Category</h1>
@@ -60,7 +60,7 @@
                      id="addSubcategoryModal" tabindex="-1">
                     <div class="modal-dialog  modal-dialog-centered">
                         <div class="modal-content" style="border-radius: 10px;">
-                            <form action="{% url 'addsubcategory' %}" method="post">
+                            <form action="{% url 'selleraddsubcategory' %}" method="post">
                                 {% csrf_token %}
                                 <div class="modal-header">
                                     <h1 class="modal-title text-dark" id="addsubcategoryModalLabel">Add subcategory</h1>
@@ -132,7 +132,7 @@
                                             <div class="col-3 col-sm-12">
                                                 <div class="form-inline justify-content-center">
                                                     <div class="form-group mb-2">
-                                                        <form action="{% url 'deletecategory' %}" method="post">
+                                                        <form action="{% url 'sellerdeletecategory' %}" method="post">
                                                             {% csrf_token %}
 
                                                             <a class="btn btn-success float-right m-2" data-bs-target="#editcategorybtn{{data.id }}"
@@ -158,7 +158,7 @@
                                      id="editcategorybtn{{ data.id }}" tabindex="-1">
                                     <div class="modal-dialog  modal-dialog-centered">
                                         <div class="modal-content" style="border-radius: 10px;">
-                                            <form action="{% url 'updateCategory' data.id %}" method="post">
+                                            <form action="{% url 'sellerupdateCategory' data.id %}" method="post">
                                                 {% csrf_token %}
                                                 <div class="modal-header">
                                                     <h1 class="modal-title text-dark"
@@ -229,7 +229,7 @@
                                                     <i class="fa-solid fa-pen"></i></a>
                                             </div>
                                             <div class="col-6">
-                                                <form action="{% url 'deletesubcategory' %}" method="post">
+                                                <form action="{% url 'sellerdeletesubcategory' %}" method="post">
                                                     <!--                                                    {% csrf_token %}-->
                                                     <input name="subcategoryid" type="hidden" value="{{subdata.id}}">
                                                     <button class="btn btn-danger float-left" type="submit"><i
@@ -247,7 +247,7 @@
                                      id="editsubcategorybtn{{ subdata.id }}" tabindex="-1">
                                     <div class="modal-dialog  modal-dialog-centered">
                                         <div class="modal-content" style="border-radius: 10px;">
-                                            <form action="{% url 'updatesubCategory' subdata.id %}" method="post">
+                                            <form action="{% url 'sellerupdatesubCategory' subdata.id %}" method="post">
                                                 {% csrf_token %}
                                                 <div class="modal-header">
                                                     <h1 class="modal-title text-dark"

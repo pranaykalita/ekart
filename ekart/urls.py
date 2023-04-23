@@ -19,7 +19,9 @@ urlpatterns = [
 
     # seller Dashbaord
     path('seller/', include('sellers.urls')),
-    path('seller/', include('accounts.urls')),
+
+    # accounts
+    path('accounts/', include('accounts.urls')),
 
 ]
 

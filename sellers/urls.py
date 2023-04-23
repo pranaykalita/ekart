@@ -1,36 +1,36 @@
-from django.urls import path
+from django.urls import path,include
 from .views import *
 
 urlpatterns = [
 
     # seller Dashbaord
-    path('', dashboard, name="dashboard"),
-    path('dashboard/', dashboard, name="dashboard"),
+    path('', dashboard, name="sellerdashboard"),
+    path('dashboard/', dashboard, name="sellerdashboard"),
     # category
-    path('category/', category, name="category"),
+    path('category/', category, name="sellercategory"),
 
     # orders
-    path('orders/', orders, name="orders"),
+    path('orders/', orders, name="sellerorders"),
     # invoice
-    path('invoice/', invoice, name="invoice"),
+    path('invoice/', invoice, name="sellerinvoice"),
     # messages
-    path('Messages/', Messages, name="messages"),
+    path('Messages/', Messages, name="sellermessages"),
 
     # category CRUD
-    path('addcategory/', addCategory, name="addcategory"),
-    path('deletecategory/', deleteCategory, name="deletecategory"),
-    path('updatecategory/<str:id>', updateCategory, name="updateCategory"),
+    path('addcategory/', addCategory, name="selleraddcategory"),
+    path('deletecategory/', deleteCategory, name="sellerdeletecategory"),
+    path('updatecategory/<str:id>', updateCategory, name="sellerupdateCategory"),
 
     # subcategory CRUD
-    path('addsubcategory/',addSubCategory, name="addsubcategory"),
-    path('deletesubcategory/', deleteSubCategory, name="deletesubcategory"),
-    path('updatesubcategory/<str:id>', updatesubCategory, name="updatesubCategory"),
+    path('addsubcategory/',addSubCategory, name="selleraddsubcategory"),
+    path('deletesubcategory/', deleteSubCategory, name="sellerdeletesubcategory"),
+    path('updatesubcategory/<str:id>', updatesubCategory, name="sellerupdatesubCategory"),
 
     # products
-    path('products/', product,name="products"),
-    path('addproducts/', Addproduct, name="addproducts"),
-    path('deleteprod/<int:id>/', deleteproduct, name="deleteproduct"),
-    path('updateproduct/<int:id>/', updateproduct, name="updateproduct"),
+    path('products/', product,name="sellerproducts"),
+    path('addproducts/', Addproduct, name="selleraddproducts"),
+    path('deleteprod/<int:id>/', deleteproduct, name="sellerdeleteproduct"),
+    path('updateproduct/<int:id>/', updateproduct, name="sellerupdateproduct"),
 
 
 

@@ -19,7 +19,7 @@
                      aria-labelledby="addproductModalLabel" aria-hidden="true">
                     <div class="modal-dialog  modal-dialog-centered">
                         <div class="modal-content" style="border-radius: 10px;">
-                            <form action="{% url 'addproducts' %}" method="post" enctype="multipart/form-data">
+                            <form action="{% url 'selleraddproducts' %}" method="post" enctype="multipart/form-data">
                                 {% csrf_token %}
                                 <div class="modal-header">
                                     <h1 class="modal-title text-dark" id="addproductModalLabel">Add New Product</h1>
@@ -151,7 +151,7 @@
                                             <div class="col-3 col-sm-12">
                                                 <div class="form-inline justify-content-center">
                                                     <div class="form-group mb-2">
-                                                        <form action="{% url 'deleteproduct' data.product.id %}"
+                                                        <form action="{% url 'sellerdeleteproduct' data.product.id %}"
                                                               method="post">
                                                             {% csrf_token %}
 
@@ -231,7 +231,7 @@
                                      aria-labelledby="editProductmodal{{data.product.id }}Label" aria-hidden="true">
                                     <div class="modal-dialog  modal-dialog-centered">
                                         <div class="modal-content" style="border-radius: 10px;">
-                                            <form action="{% url 'updateproduct' data.product.id %}" method="post"
+                                            <form action="{% url 'sellerupdateproduct' data.product.id %}" method="post"
                                                   enctype="multipart/form-data">
                                                 {% csrf_token %}
                                                 <div class="modal-header">
