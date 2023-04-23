@@ -18,7 +18,7 @@ class CustomUserManager(BaseUserManager):
         user.save(using=self._db)
         return user
     def create_user(self, email, password, **extra_fields):
-        extra_fields.setdefault('is_staff',False)
+        extra_fields.setdefault('is_staff',True)
         extra_fields.setdefault('is_active',True)
         extra_fields.setdefault('is_superuser',False)
         extra_fields.setdefault('is_seller',False)
@@ -38,6 +38,14 @@ class CustomUserManager(BaseUserManager):
         extra_fields.setdefault('is_seller',True)
         return self._create_user( email, password, **extra_fields)
 
+    def create_customer(self, email, password, **extra_fields):
+        extra_fields.setdefault('is_staff',False)
+        extra_fields.setdefault('is_active',True)
+        extra_fields.setdefault('is_superuser',False)
+        extra_fields.setdefault('is_seller',False)
+        extra_fields.setdefault('is_customer',True)
+        return self._create_user( email, password, **extra_fields)
+
     def get_by_natural_key(self, email):
         return self.get(email=email)
 
@@ -53,6 +61,7 @@ class customerUser(AbstractBaseUser,PermissionsMixin):
     is_active = models.BooleanField(default=True)
     is_superuser = models.BooleanField(default=False)
     is_seller = models.BooleanField(default=False)
+    is_customer = models.BooleanField(default=True)
 
     groups = models.ManyToManyField(
         'auth.Group',

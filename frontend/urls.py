@@ -5,9 +5,9 @@ from accounts.views import *
 urlpatterns = [
 
     path('', homepageView,name="frontendhome"),
-    path('product/item/<str:id>/', singleproductView),
+    path('product/item/<str:id>/', singleproductView,name="frontendprodutsingle"),
 
-    path('login/', loginRegisterView),
+    path('login/', loginRegisterView, name="frontendlogin"),
 
 
 
