@@ -42,7 +42,7 @@ def product(request):
                'productList': product,
                'segment': 'SellerProduct',
                }
-    return render(request, 'seller/pages/products.html', context)
+    return render(request, 'seller/pages/products_content.html', context)
 
 
 # orders
@@ -159,7 +159,7 @@ def Addproduct(request):
         saveproddetails = ProductDetail(product=product, about=itemAbout, SKU=sku, description=itemDesc)
         saveproddetails.save()
         return redirect('sellerproducts')
-    return render(request, 'seller/pages/products.html')
+    return render(request, 'seller/pages/products_content.html')
 
 
 # Delete Products
@@ -169,7 +169,7 @@ def deleteproduct(request, id):
         delprod = Product.objects.get(id=id)
         delprod.delete()
         return redirect('sellerproducts')
-    return render(request, 'seller/pages/products.html')
+    return render(request, 'seller/pages/products_content.html')
 
 
 # Update Products
@@ -209,4 +209,4 @@ def updateproduct(request, id):
         subProduct.save()
         return redirect('sellerproducts')
 
-    return render(request, 'seller/pages/products.html')
+    return render(request, 'seller/pages/products_content.html')

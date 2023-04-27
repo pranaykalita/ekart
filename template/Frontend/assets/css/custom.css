@@ -12,8 +12,16 @@ a.butbtnprodindex{
     font-weight: 300;
     letter-spacing: 1.2px;
 }
+
 a.butbtnprodindex:hover{
  background-color: #black;
  letter-spacing: 5px;
  font-weight: 600;
+}
+
+.product-thumb{
+ max-height: 270px ;
+ object-fit: contain;
+ height: auto ;
+ text-align: center ;
 }

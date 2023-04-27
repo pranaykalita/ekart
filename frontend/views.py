@@ -1,11 +1,21 @@
 from django.shortcuts import render
 import requests
+import json
+from products.models import Category,Product
 from django.conf import settings
 from accounts.models import *
 
+def get_categories():
+    response = requests.get('http://127.0.0.1:8000/api2/categorylist/')
+    if response.status_code == 200:
+        data = json.loads(response.content)
+        return data
+    else:
+        return []
 
 # Lsit all Product
 def homepageView(request):
+
     # fetch category And SubCategory
     category_response = requests.get('http://127.0.0.1:8000/api2/categorylist/')
     category = category_response.json()
@@ -20,28 +30,31 @@ def homepageView(request):
 
 # single Product
 def singleproductView(request, id):
+    category = get_categories()
     url = 'http://127.0.0.1:8000/api2/product/item/' + id
     producturl = requests.get(url)
     products = producturl.json()
-    context = {'product': products}
+    context = {'product': products, 'categories': category,}
     print(context)
     return render(request, 'Frontend/pages/singleprod.html', context)
 
 
-def prdouctView(request):
-    return render(request, 'Frontend/pages/singleprod.html')
+# product
+def productsView(request):
+    category = get_categories()
 
+    selected_category = request.GET.get('cat', None)
 
-def testv(request):
-    category = request.GET.get('cat')
-    cat = requests.get('http://127.0.0.1:8000/api2/categorylist/')
-    categorylist = cat.json()
-    if category:
-        url = f'http://127.0.0.1:8000/api2/product/item/?cat={category}'
+    print(selected_category)
+    if selected_category:
+        product_response = requests.get(f'http://127.0.0.1:8000/api2/products/?cat={selected_category}')
     else:
-        url = 'http://127.0.0.1:8000/api2/product/item/'
+        product_response = requests.get('http://127.0.0.1:8000/api2/products/')
 
-    response = requests.get(url)
-    products = response.json()
+    products = product_response.json()
 
-    return render(request, 'Frontend/pages/test.html',{'products': products,'categorylist': categorylist,})
+
+    context = {'products': products,
+               'categories': category,
+               }
+    return render(request, 'Frontend/pages/products.html',context)

@@ -7,6 +7,6 @@ urlpatterns = [
     path('', homepageView,name="frontendhome"),
     path('product/item/<str:id>/', singleproductView,name="frontendprodutsingle"),
 
-    path('test', testv)
+    path('products/', productsView,name="frontendproducts"),
 
 ]

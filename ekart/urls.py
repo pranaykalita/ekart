@@ -13,6 +13,9 @@ urlpatterns = [
 
     path('', include('frontend.urls')),
 
+    # cart from products
+    path('cart/', include('products.urls')),
+
     # api
     path('api/',include('api.urls')),
     path('api2/',include('api2.urls')),
@@ -22,6 +25,7 @@ urlpatterns = [
 
     # accounts
     path('accounts/', include('accounts.urls')),
+
 
 ]
 

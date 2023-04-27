@@ -1,6 +1,7 @@
 from rest_framework import serializers
-from products.models import *
+
 from accounts.models import *
+from orders.models import *
 
 
 # SubcategorySerializer
@@ -49,3 +50,41 @@ class AccountSerializer(serializers.ModelSerializer):
     class Meta:
         model = customerUser
         fields = ['username', 'email']
+
+
+# productSerializer Item Only
+class CartproductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = ('item', 'price', 'image',)
+
+
+# cart items Serializer
+class CartItemSerializer(serializers.ModelSerializer):
+    product = CartproductSerializer(many=False)
+    itemtotal = serializers.SerializerMethodField(method_name="total")
+
+    class Meta:
+        model = CartItems
+        fields = ['id', 'product', 'quantity', 'itemtotal']
+
+    def total(self, cartitems: CartItems):
+        return cartitems.quantity * cartitems.product.price
+
+
+# Cart Serializer
+class CartSerializer(serializers.ModelSerializer):
+    id = serializers.UUIDField(read_only=True)
+    items = CartItemSerializer(many=True)
+    GrandTotal = serializers.SerializerMethodField(method_name='main_total')
+    class Meta:
+        model = Cart
+        fields = ['id', 'items', "GrandTotal"]
+
+    def main_total(self, cart:Cart):
+        items = cart.items.all()
+        sum =0
+        for item in items:
+            sum += item.quantity*item.product.price
+        return sum
+
