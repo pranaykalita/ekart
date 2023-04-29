@@ -3,12 +3,20 @@ from django.shortcuts import render, redirect
 from django.utils import timezone
 from products.models import Category, SubCategory, Product, ProductDetail
 from django.contrib.auth.decorators import login_required
-from accounts.models import *
+from accounts.models import customerUser,customerData
+
+# SELLER ID SESSION
+def sellersession(request):
+    seller_id = request.session.get('seller_id')
+    seller =  customerUser.objects.get(id=seller_id)
+    return seller
 
 
 # dashboard
 @login_required(login_url='sellerlogin')
 def dashboard(request):
+
+
     productcount = Product.objects.count()
     catCount = Category.objects.count()
     subcatCount = SubCategory.objects.count()
@@ -34,15 +42,17 @@ def category(request):
 # products
 @login_required(login_url='sellerlogin')
 def product(request):
+    seller = sellersession(request)
     categories = Category.objects.all()
     subcategories = SubCategory.objects.select_related('category').all()
-    product = ProductDetail.objects.select_related('product').all()
+
+    product = Product.objects.filter(seller=seller).select_related('product')
     context = {'categories': categories,
                'subcategories': subcategories,
                'productList': product,
                'segment': 'SellerProduct',
                }
-    return render(request, 'seller/pages/products_content.html', context)
+    return render(request, 'seller/pages/products.html', context)
 
 
 # orders
@@ -147,19 +157,23 @@ def Addproduct(request):
         subcategory = SubCategory.objects.get(pk=itemsubCategoryID)
         itemimg = request.FILES.get("itemimg")
 
+        # seller
+        seller_id = request.session.get('seller_id')
+        seller =  customerUser.objects.get(id=seller_id)
+
         itemAbout = request.POST.get("itemabout")
         itemDesc = request.POST.get("itemdescription")
         sku = request.POST.get("sku")
 
         saveprod = Product(item=itemname, price=itemprice, quantity=itemqty, category=category, subCategory=subcategory,
-                           image=itemimg)
+                           seller=seller, image=itemimg)
+        print(seller)
         saveprod.save()
         prod_id = saveprod.id
         product = Product.objects.get(pk=prod_id)
         saveproddetails = ProductDetail(product=product, about=itemAbout, SKU=sku, description=itemDesc)
         saveproddetails.save()
         return redirect('sellerproducts')
-    return render(request, 'seller/pages/products_content.html')
 
 
 # Delete Products
@@ -169,7 +183,7 @@ def deleteproduct(request, id):
         delprod = Product.objects.get(id=id)
         delprod.delete()
         return redirect('sellerproducts')
-    return render(request, 'seller/pages/products_content.html')
+    return render(request, 'seller/pages/products.html')
 
 
 # Update Products

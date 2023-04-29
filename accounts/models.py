@@ -51,7 +51,7 @@ class CustomUserManager(BaseUserManager):
 
 
 class customerUser(AbstractBaseUser,PermissionsMixin):
-    email = models.EmailField(unique=True,max_length=254)
+    email = models.EmailField(unique=True, max_length=254)
     username = models.CharField(max_length=255)
     firstname = models.CharField(max_length=255)
     lastname = models.CharField(max_length=255)
@@ -94,5 +94,9 @@ class customerData(models.Model):
     mobileno = models.CharField(max_length=10)
     profileimg = models.ImageField(upload_to='media/seller_prof')
 
+    class Meta:
+        verbose_name='customerData'
+        verbose_name_plural = 'customerDatas'
+
     def __str__(self):
-        return self.customeruser
+        return self.mobileno

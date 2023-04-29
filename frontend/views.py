@@ -6,7 +6,7 @@ from django.conf import settings
 from accounts.models import *
 
 def get_categories():
-    response = requests.get('http://127.0.0.1:8000/api2/categorylist/')
+    response = requests.get('http://127.0.0.1:8000/api/categorylist/')
     if response.status_code == 200:
         data = json.loads(response.content)
         return data
@@ -17,11 +17,11 @@ def get_categories():
 def homepageView(request):
 
     # fetch category And SubCategory
-    category_response = requests.get('http://127.0.0.1:8000/api2/categorylist/')
+    category_response = requests.get('http://127.0.0.1:8000/api/categorylist/')
     category = category_response.json()
 
     # fetch product
-    product_response = requests.get('http://127.0.0.1:8000/api2/products/')
+    product_response = requests.get('http://127.0.0.1:8000/api/products/')
     products = product_response.json()
     context = {'categories': category,
                'products': products}
@@ -31,11 +31,13 @@ def homepageView(request):
 # single Product
 def singleproductView(request, id):
     category = get_categories()
-    url = 'http://127.0.0.1:8000/api2/product/item/' + id
+    url = 'http://127.0.0.1:8000/api/product/item/' + id
     producturl = requests.get(url)
     products = producturl.json()
-    context = {'product': products, 'categories': category,}
-    print(context)
+    customer = request.session.get('customer_id')
+    print(customer)
+    context = {'product': products, 'categories': category, 'customer_id':customer}
+
     return render(request, 'Frontend/pages/singleprod.html', context)
 
 
@@ -47,9 +49,9 @@ def productsView(request):
 
     print(selected_category)
     if selected_category:
-        product_response = requests.get(f'http://127.0.0.1:8000/api2/products/?cat={selected_category}')
+        product_response = requests.get(f'http://127.0.0.1:8000/api/products/?cat={selected_category}')
     else:
-        product_response = requests.get('http://127.0.0.1:8000/api2/products/')
+        product_response = requests.get('http://127.0.0.1:8000/api/products/')
 
     products = product_response.json()
 

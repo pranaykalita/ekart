@@ -17,6 +17,7 @@
                         </div>
                         <div class="swiper-slide">
                             <img alt="" class="img-responsive m-auto"
+                            <img alt="" class="img-responsive m-auto"
                                  src="{{product.image}}">
                             <a class="venobox full-preview" data-gall="myGallery"
                                href="{{product.image}}">
@@ -117,16 +118,20 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="pro-details-quality">
-                        <div class="cart-plus-minus">
-                            <input class="cart-plus-minus-box" name="qtybutton" type="text" value="1"/>
-                        </div>
-                        <div class="pro-details-cart">
-                            <button class="add-cart"> Add To Cart
-                            </button>
+                    <form action="{% url 'additmtocart' prod_id=product.id %}" method="POST">
+                        {% csrf_token %}
+                        <div class="pro-details-quality">
+                            {% csrf_token %}
+                            <div class="cart-plus-minus">
+                                <input class="cart-plus-minus-box" name="qtybutton" type="text" value="1"/>
+                            </div>
+                            <div class="pro-details-cart">
+                                <button type="submit" class="add-cart"> Add To Cart
+                                </button>
+                            </div>
                         </div>
 
-                    </div>
+                    </form>
                 </div>
                 <!-- product details description area start -->
                 <div class="description-review-wrapper">
@@ -140,9 +145,9 @@
                         <div class="tab-pane active" id="des-details1">
                             <div class="product-description-wrapper">
                                 <div>
-                                {% autoescape off %}
-                                {{product.product.description}}
-                                {% endautoescape %}
+                                    {% autoescape off %}
+                                    {{product.product.description}}
+                                    {% endautoescape %}
                                 </div>
                             </div>
                         </div>

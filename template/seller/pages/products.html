@@ -9,61 +9,62 @@
 
         <div class="row m-2">
             <div class="col-12">
-                <button class="btn btn-primary float-right" type="button" data-bs-toggle="modal"
-                        data-bs-target="#addproductsModal">
+                <button class="btn btn-primary float-right" data-bs-target="#addproductsModal" data-bs-toggle="modal"
+                        type="button">
                     <i class="fa-solid fa-square-plus"></i>
                     Add Products
                 </button>
+
                 <!-- add Product Modal-->
-                <div class="modal fade rounded" id="addproductsModal" tabindex="-1"
-                     aria-labelledby="addproductModalLabel" aria-hidden="true">
+                <div aria-hidden="true" aria-labelledby="addproductModalLabel" class="modal fade rounded"
+                     id="addproductsModal" tabindex="-1">
                     <div class="modal-dialog  modal-dialog-centered">
                         <div class="modal-content" style="border-radius: 10px;">
-                            <form action="{% url 'selleraddproducts' %}" method="post" enctype="multipart/form-data">
+                            <form action="{% url 'selleraddproducts' %}" enctype="multipart/form-data" method="post">
                                 {% csrf_token %}
                                 <div class="modal-header">
                                     <h1 class="modal-title text-dark" id="addproductModalLabel">Add New Product</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
+                                    <button aria-label="Close" class="btn-close" data-bs-dismiss="modal"
+                                            type="button"></button>
                                 </div>
                                 <div class="modal-body">
                                     <div class="row">
                                         <div class="col">
                                             <div class="mb-3">
-                                                <label for="ProductSku" class="form-label">SKU:</label>
-                                                <button type="button" class="btn btn-primary float-end m-2"
-                                                        id="generate-sku">GenerateSKU
+                                                <label class="form-label" for="ProductSku">SKU:</label>
+                                                <button class="btn btn-primary float-end m-2" id="generate-sku"
+                                                        type="button">GenerateSKU
                                                 </button>
-                                                <input type="text" id="ProductSku" name="sku" class="form-control"
-                                                       style="border-radius: 10px;" placeholder="SKU-####" required>
+                                                <input class="form-control" id="ProductSku" name="sku" placeholder="SKU-####"
+                                                       required style="border-radius: 10px;" type="text">
                                             </div>
                                             <div class="mb-3">
-                                                <label for="ProductName" class="form-label">ProductName</label>
-                                                <input type="text" name="itemname" id="productname" class="form-control"
-                                                       style="border-radius: 10px;" placeholder="Name" required>
+                                                <label class="form-label" for="ProductName">ProductName</label>
+                                                <input class="form-control" id="productname" name="itemname" placeholder="Name"
+                                                       required style="border-radius: 10px;" type="text">
                                             </div>
                                             <div class="row">
                                                 <div class="col-6">
                                                     <div class="mb-3">
-                                                        <label for="Price" class="form-label">Price</label>
-                                                        <input type="number" step="0.01" name="itemprice" id="price"
-                                                               class="form-control" placeholder="Price" required>
+                                                        <label class="form-label" for="Price">Price</label>
+                                                        <input class="form-control" id="price" name="itemprice" placeholder="Price"
+                                                               required step="0.01" type="number">
                                                     </div>
                                                 </div>
                                                 <div class="col-6">
                                                     <div class="mb-3">
-                                                        <label for="Quantity" class="form-label">Quantity</label>
-                                                        <input type="number" name="itemqty" id="Quantity"
-                                                               class="form-control" placeholder="Quantity" required>
+                                                        <label class="form-label" for="Quantity">Quantity</label>
+                                                        <input class="form-control" id="Quantity" name="itemqty"
+                                                               placeholder="Quantity" required type="number">
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-6">
                                                     <div class="mb-3">
-                                                        <label for="Category" class="form-label">Category</label>
-                                                        <select class="form-select" id="category" name="itemcategory"
-                                                                aria-label="category">
+                                                        <label class="form-label" for="Category">Category</label>
+                                                        <select aria-label="category" class="form-select" id="category"
+                                                                name="itemcategory">
                                                             {% for data in categories %}
                                                             <option value="{{data.id}}">{{ data.categoryName}}</option>
                                                             {%endfor%}
@@ -72,9 +73,9 @@
                                                 </div>
                                                 <div class="col-6">
                                                     <div class="mb-3">
-                                                        <label for="subCategory" class="form-label">subCategory</label>
-                                                        <select class="form-select" id="subCategory"
-                                                                name="itemsubcategory" aria-label="subcategory">
+                                                        <label class="form-label" for="subCategory">subCategory</label>
+                                                        <select aria-label="subcategory" class="form-select"
+                                                                id="subCategory" name="itemsubcategory">
                                                             {% for data in subcategories %}
                                                             <option value="{{ data.id }}">{{ data.subcatgName}}</option>
                                                             {%endfor%}
@@ -84,33 +85,33 @@
                                             </div>
 
                                             <div class="mb-3">
-                                                <label for="About" class="form-label">About</label>
+                                                <label class="form-label" for="About">About</label>
                                                 <textarea class="form-control" id="about" name="itemabout"
-                                                          rows="3" required></textarea>
+                                                          required rows="3"></textarea>
                                                 <small class="form-text text-muted">maximum 150 words | support
                                                     HTML </small>
                                             </div>
 
                                             <div class="mb-3">
-                                                <label for="Description" class="form-label">Description</label>
-                                                <textarea class="form-control" name="itemdescription" id="Description"
-                                                          rows="3" required></textarea>
+                                                <label class="form-label" for="Description">Description</label>
+                                                <textarea class="form-control" id="Description" name="itemdescription"
+                                                          required rows="3"></textarea>
                                                 <small class="form-text text-muted">maximum 500 words | support
                                                     HTML </small>
                                             </div>
 
                                             <div class="mb-3">
-                                                <label for="ProductImage" class="form-label">Product Image</label>
-                                                <input class="form-control" name="itemimg" type="file"
-                                                       id="ProductImage" required>
+                                                <label class="form-label" for="ProductImage">Product Image</label>
+                                                <input class="form-control" id="ProductImage" name="itemimg"
+                                                       required type="file">
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
+                                    <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">Close
                                     </button>
-                                    <button type="submit" class="btn btn-primary">Save</button>
+                                    <button class="btn btn-primary" type="submit">Save</button>
                                 </div>
                             </form>
                         </div>
@@ -139,35 +140,35 @@
                                 {% for data in productList %}
                                 <tr>
                                     <td>
-                                        <img src="{{data.product.image.url}}"
-                                             class="avatar img-fluid rounded me-1" alt="{{data.product.item}}"/>
+                                        <img alt="{{data.product.item}}"
+                                             class="avatar img-fluid rounded me-1" src="{{data.image.url}}"/>
                                     </td>
-                                    <td>{{data.product.item}}</td>
-                                    <td>{{data.product.price}} ₹</td>
-                                    <td>{{data.product.quantity}}</td>
-                                    <td>{{data.product.category}}</td>
+                                    <td>{{data.item}}</td>
+                                    <td>{{data..price}} ₹</td>
+                                    <td>{{data.quantity}}</td>
+                                    <td>{{data.category}}</td>
                                     <td>
                                         <div class="row">
                                             <div class="col-3 col-sm-12">
                                                 <div class="form-inline justify-content-center">
                                                     <div class="form-group mb-2">
-                                                        <form action="{% url 'sellerdeleteproduct' data.product.id %}"
+                                                        <form action="{% url 'sellerdeleteproduct' data.id %}"
                                                               method="post">
                                                             {% csrf_token %}
 
-                                                            <button type="button" class="btn btn-success m-2"
+                                                            <button class="btn btn-success m-2" data-bs-target="#productData{{data.id }}"
                                                                     data-bs-toggle="modal"
-                                                                    data-bs-target="#productData{{data.product.id }}">
+                                                                    type="button">
                                                                 View
                                                             </button>
-                                                            <button type="button" class="btn btn-success m-2"
+                                                            <button class="btn btn-success m-2" data-bs-target="#editProductmodal{{data.id }}"
                                                                     data-bs-toggle="modal"
-                                                                    data-bs-target="#editProductmodal{{data.product.id }}">
+                                                                    type="button">
                                                                 Edit
                                                             </button>
-                                                            <input type="hidden" name="category_name"
+                                                            <input name="category_name" type="hidden"
                                                                    value="{{data.id}}">
-                                                            <button type="submit" class="btn btn-danger">
+                                                            <button class="btn btn-danger" type="submit">
                                                                 <i class="fa-solid fa-trash"></i>
                                                             </button>
                                                         </form>
@@ -179,45 +180,45 @@
                                     </td>
                                 </tr>
                                 <!-- show product data modal-->
-                                <div class="modal fade" id='productData{{data.product.id}}' data-bs-backdrop="static"
-                                     data-bs-keyboard="false" tabindex="-1"
-                                     aria-labelledby="productData{{data.product.id}}Label" aria-hidden="true">
+                                <div aria-hidden="true" aria-labelledby="productData{{data.id}}Label" class="modal fade"
+                                     data-bs-backdrop="static" data-bs-keyboard="false"
+                                     id='productData{{data.id}}' tabindex="-1">
                                     <div class="modal-dialog modal-dialog-centered modal-lg">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="staticBackdropLabel">
                                                     {{data.SKU}}</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                        aria-label="Close"></button>
+                                                <button aria-label="Close" class="btn-close" data-bs-dismiss="modal"
+                                                        type="button"></button>
                                             </div>
                                             <div class="modal-body">
                                                 <div class="row">
                                                     <div class="col-12 col-sm-6">
-                                                        <img class="itemdetailsmodalimg"
-                                                             src="{{data.product.image.url}}" alt="">
+                                                        <img alt=""
+                                                             class="itemdetailsmodalimg" src="{{data.image.url}}">
                                                     </div>
 
                                                     <div class="col-12 col-sm-6">
-                                                        <h3>{{data.product.item}}</h3>
-                                                        <span class="badge bg-primary">{{data.product.category}}</span>
+                                                        <h3>{{data.item}}</h3>
+                                                        <span class="badge bg-primary">{{data.category}}</span>
                                                         <span
-                                                                class="badge bg-secondary">{{data.product.subCategory}}</span>
+                                                                class="badge bg-secondary">{{data.subCategory}}</span>
 
-                                                        <p>{{data.about}}</p>
+                                                        <p>{{data.product.about}}</p>
 
                                                         <div class="py-3">
                                                             <h3><strong>Description</strong></h3>
                                                             <div>
                                                                 {% autoescape off %}
-                                                                {{data.description}}
+                                                                {{data.product.description}}
                                                                 {% endautoescape %}
                                                             </div>
 
                                                         </div>
                                                         <h4 class="price">price: <span
-                                                                class="text-danger">${{data.product.price}}</span>
+                                                                class="text-danger">${{data.price}}</span>
                                                         </h4>
-                                                        <h5>Quantity: <span>{{data.product.quantity}}</span></h5>
+                                                        <h5>Quantity: <span>{{data.quantity}}</span></h5>
 
 
                                                     </div>
@@ -227,66 +228,69 @@
                                     </div>
                                 </div>
                                 <!--  update product-->
-                                <div class="modal fade rounded" id="editProductmodal{{data.product.id }}" tabindex="-1"
-                                     aria-labelledby="editProductmodal{{data.product.id }}Label" aria-hidden="true">
+                                <div aria-hidden="true" aria-labelledby="editProductmodal{{data.id }}Label" class="modal fade rounded"
+                                     id="editProductmodal{{data.id }}" tabindex="-1">
                                     <div class="modal-dialog  modal-dialog-centered">
                                         <div class="modal-content" style="border-radius: 10px;">
-                                            <form action="{% url 'sellerupdateproduct' data.product.id %}" method="post"
-                                                  enctype="multipart/form-data">
+                                            <form action="{% url 'sellerupdateproduct' data.id %}" enctype="multipart/form-data"
+                                                  method="post">
                                                 {% csrf_token %}
                                                 <div class="modal-header">
                                                     <h1 class="modal-title text-dark">Edit Product</h1>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                            aria-label="Close"></button>
+                                                    <button aria-label="Close" class="btn-close" data-bs-dismiss="modal"
+                                                            type="button"></button>
                                                 </div>
                                                 <div class="modal-body">
                                                     <div class="row">
                                                         <div class="col">
                                                             <div class="mb-3">
-                                                                <label for="ProductSku" class="form-label">SKU:</label>
-                                                                <input type="text"
-                                                                       class="form-control"
+                                                                <label class="form-label" for="ProductSku">SKU:</label>
+                                                                <input class="form-control"
+                                                                       disabled
                                                                        style="border-radius: 10px;"
-                                                                       value="{{data.SKU}}" disabled>
+                                                                       type="text" value="{{data.product.SKU}}">
                                                             </div>
                                                             <div class="mb-3">
-                                                                <label for="ProductName"
-                                                                       class="form-label">ProductName</label>
-                                                                <input type="text" name="itemname" value="{{data.product.item}}"
-                                                                       class="form-control"
-                                                                       style="border-radius: 10px;" placeholder="Name"
-                                                                       required>
+                                                                <label class="form-label"
+                                                                       for="ProductName">ProductName</label>
+                                                                <input class="form-control" name="itemname"
+                                                                       placeholder="Name"
+                                                                       required
+                                                                       style="border-radius: 10px;" type="text"
+                                                                       value="{{data.item}}">
                                                             </div>
                                                             <div class="row">
                                                                 <div class="col-6">
                                                                     <div class="mb-3">
-                                                                        <label for="Price"
-                                                                               class="form-label">Price</label>
-                                                                        <input type="number" step="0.01"
-                                                                               name="itemprice" value="{{data.product.price}}"
-                                                                               class="form-control" placeholder="Price"
-                                                                               required>
+                                                                        <label class="form-label"
+                                                                               for="Price">Price</label>
+                                                                        <input class="form-control" name="itemprice"
+                                                                               placeholder="Price"
+                                                                               required
+                                                                               step="0.01" type="number"
+                                                                               value="{{data.price}}">
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-6">
                                                                     <div class="mb-3">
-                                                                        <label for="Quantity" class="form-label">Quantity</label>
-                                                                        <input type="number" name="itemqty"
-                                                                               value="{{data.product.quantity}}"
-                                                                               class="form-control"
-                                                                               placeholder="Quantity" required>
+                                                                        <label class="form-label" for="Quantity">Quantity</label>
+                                                                        <input class="form-control" name="itemqty"
+                                                                               placeholder="Quantity"
+                                                                               required
+                                                                               type="number" value="{{data.quantity}}">
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="row">
                                                                 <div class="col-6">
                                                                     <div class="mb-3">
-                                                                        <label for="Category" class="form-label">Category</label>
-                                                                        <select class="form-select"
-                                                                                name="itemcategory"
-                                                                                aria-label="category">
+                                                                        <label class="form-label" for="Category">Category</label>
+                                                                        <select aria-label="category"
+                                                                                class="form-select"
+                                                                                name="itemcategory">
                                                                             {% for data in categories %}
-                                                                            <option value="{{data.id}}">{{data.categoryName}}
+                                                                            <option value="{{data.id}}">
+                                                                                {{data.categoryName}}
                                                                             </option>
                                                                             {%endfor%}
                                                                         </select>
@@ -294,12 +298,13 @@
                                                                 </div>
                                                                 <div class="col-6">
                                                                     <div class="mb-3">
-                                                                        <label for="subCategory" class="form-label">subCategory</label>
-                                                                        <select class="form-select"
-                                                                                name="itemsubcategory"
-                                                                                aria-label="subcategory">
+                                                                        <label class="form-label" for="subCategory">subCategory</label>
+                                                                        <select aria-label="subcategory"
+                                                                                class="form-select"
+                                                                                name="itemsubcategory">
                                                                             {% for data in subcategories %}
-                                                                            <option value="{{data.id }}">{{data.subcatgName}}
+                                                                            <option value="{{data.id }}">
+                                                                                {{data.subcatgName}}
                                                                             </option>
                                                                             {%endfor%}
                                                                         </select>
@@ -308,38 +313,39 @@
                                                             </div>
 
                                                             <div class="mb-3">
-                                                                <label for="About" class="form-label">About</label>
+                                                                <label class="form-label" for="About">About</label>
                                                                 <textarea class="form-control"
                                                                           name="itemabout"
-                                                                          rows="3" required>{{data.about}}</textarea>
+                                                                          required rows="3">{{data.product.about}}</textarea>
                                                                 <small class="form-text text-muted">maximum 150 words |
                                                                     support
                                                                     HTML </small>
                                                             </div>
 
                                                             <div class="mb-3">
-                                                                <label for="Description"
-                                                                       class="form-label">Description</label>
+                                                                <label class="form-label"
+                                                                       for="Description">Description</label>
                                                                 <textarea class="form-control" name="itemdescription"
-                                                                          rows="3" required>{{data.description}}</textarea>
+                                                                          required
+                                                                          rows="3">{{data.product.description}}</textarea>
                                                                 <small class="form-text text-muted">maximum 500 words |
                                                                     support
                                                                     HTML </small>
                                                             </div>
 
                                                             <div class="mb-3">
-                                                                <label for="ProductImage" class="form-label">Product
+                                                                <label class="form-label" for="ProductImage">Product
                                                                     Image</label>
-                                                                <input class="form-control" name="itemimg" type="file" >
+                                                                <input class="form-control" name="itemimg" type="file">
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                            data-bs-dismiss="modal">Close
+                                                    <button class="btn btn-secondary" data-bs-dismiss="modal"
+                                                            type="button">Close
                                                     </button>
-                                                    <button type="submit" class="btn btn-primary">Save</button>
+                                                    <button class="btn btn-primary" type="submit">Save</button>
                                                 </div>
                                             </form>
                                         </div>

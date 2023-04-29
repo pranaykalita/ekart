@@ -7,7 +7,7 @@
 
 <body>
 <div class="wrapper">
-    <nav id="sidebar" class="sidebar js-sidebar">
+    <nav class="sidebar js-sidebar" id="sidebar">
         <div class="sidebar-content js-simplebar">
             <a class="sidebar-brand" href="#">
                 <span class="align-middle">Ekart-Sales</span>
@@ -75,9 +75,9 @@
             </ul>
 
             <div class="sidebar-cta">
-                    <a class="sidebar-link" href="{% url 'globallogout'%}">
-                        <i class="align-middle" data-feather="log-in"></i> <span class="align-middle">Logout</span>
-                    </a>
+                <a class="sidebar-link" href="{% url 'globallogout'%}">
+                    <i class="align-middle" data-feather="log-in"></i> <span class="align-middle">Logout</span>
+                </a>
             </div>
         </div>
     </nav>
@@ -91,19 +91,19 @@
             <div class="navbar-collapse collapse">
                 <ul class="navbar-nav navbar-align">
                     <li class="nav-item dropdown">
-                        <a class="nav-icon dropdown-toggle" href="#" id="alertsDropdown" data-bs-toggle="dropdown">
+                        <a class="nav-icon dropdown-toggle" data-bs-toggle="dropdown" href="#" id="alertsDropdown">
                             <div class="position-relative">
                                 <i class="align-middle" data-feather="bell"></i>
                                 <span class="indicator">4</span>
                             </div>
                         </a>
-                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0"
-                             aria-labelledby="alertsDropdown">
+                        <div aria-labelledby="alertsDropdown"
+                             class="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0">
                             <div class="dropdown-menu-header">
                                 4 New Notifications
                             </div>
                             <div class="list-group">
-                                <a href="#" class="list-group-item">
+                                <a class="list-group-item" href="#">
                                     <div class="row g-0 align-items-center">
                                         <div class="col-2">
                                             <i class="text-danger" data-feather="alert-circle"></i>
@@ -117,30 +117,31 @@
                                 </a>
                             </div>
                             <div class="dropdown-menu-footer">
-                                <a href="#" class="text-muted">Show all notifications</a>
+                                <a class="text-muted" href="#">Show all notifications</a>
                             </div>
                         </div>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-icon dropdown-toggle" href="#" id="messagesDropdown"
-                           data-bs-toggle="dropdown">
+                        <a class="nav-icon dropdown-toggle" data-bs-toggle="dropdown" href="#"
+                           id="messagesDropdown">
                             <div class="position-relative">
                                 <i class="align-middle" data-feather="message-square"></i>
                             </div>
                         </a>
-                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0"
-                             aria-labelledby="messagesDropdown">
+                        <div aria-labelledby="messagesDropdown"
+                             class="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0">
                             <div class="dropdown-menu-header">
                                 <div class="position-relative">
                                     4 New Messages
                                 </div>
                             </div>
                             <div class="list-group">
-                                <a href="#" class="list-group-item">
+                                <a class="list-group-item" href="#">
                                     <div class="row g-0 align-items-center">
                                         <div class="col-2">
-                                            <img src="{% static 'img/avatars/avatar-5.jpg'%}"
-                                                 class="avatar img-fluid rounded-circle" alt="Vanessa Tucker">
+                                            <img alt="Vanessa Tucker"
+                                                 class="avatar img-fluid rounded-circle"
+                                                 src="{% static 'img/avatars/avatar-5.jpg'%}">
                                         </div>
                                         <div class="col-10 ps-2">
                                             <div class="text-dark">Vanessa Tucker</div>
@@ -151,11 +152,12 @@
                                         </div>
                                     </div>
                                 </a>
-                                <a href="#" class="list-group-item">
+                                <a class="list-group-item" href="#">
                                     <div class="row g-0 align-items-center">
                                         <div class="col-2">
-                                            <img src="{% static 'img/avatars/avatar-2.jpg'%}"
-                                                 class="avatar img-fluid rounded-circle" alt="William Harris">
+                                            <img alt="William Harris"
+                                                 class="avatar img-fluid rounded-circle"
+                                                 src="{% static 'img/avatars/avatar-2.jpg'%}">
                                         </div>
                                         <div class="col-10 ps-2">
                                             <div class="text-dark">William Harris</div>
@@ -166,11 +168,12 @@
                                         </div>
                                     </div>
                                 </a>
-                                <a href="#" class="list-group-item">
+                                <a class="list-group-item" href="#">
                                     <div class="row g-0 align-items-center">
                                         <div class="col-2">
-                                            <img src="{% static 'img/avatars/avatar-4.jpg'%}"
-                                                 class="avatar img-fluid rounded-circle" alt="Christina Mason">
+                                            <img alt="Christina Mason"
+                                                 class="avatar img-fluid rounded-circle"
+                                                 src="{% static 'img/avatars/avatar-4.jpg'%}">
                                         </div>
                                         <div class="col-10 ps-2">
                                             <div class="text-dark">Christina Mason</div>
@@ -180,11 +183,12 @@
                                         </div>
                                     </div>
                                 </a>
-                                <a href="#" class="list-group-item">
+                                <a class="list-group-item" href="#">
                                     <div class="row g-0 align-items-center">
                                         <div class="col-2">
-                                            <img src="{% static 'img/avatars/avatar-3.jpg'%}"
-                                                 class="avatar img-fluid rounded-circle" alt="Sharon Lessman">
+                                            <img alt="Sharon Lessman"
+                                                 class="avatar img-fluid rounded-circle"
+                                                 src="{% static 'img/avatars/avatar-3.jpg'%}">
                                         </div>
                                         <div class="col-10 ps-2">
                                             <div class="text-dark">Sharon Lessman</div>
@@ -197,28 +201,29 @@
                                 </a>
                             </div>
                             <div class="dropdown-menu-footer">
-                                <a href="#" class="text-muted">Show all messages</a>
+                                <a class="text-muted" href="#">Show all messages</a>
                             </div>
                         </div>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#"
-                           data-bs-toggle="dropdown">
+                        <a class="nav-icon dropdown-toggle d-inline-block d-sm-none" data-bs-toggle="dropdown"
+                           href="#">
                             <i class="align-middle" data-feather="settings"></i>
                         </a>
 
                         {% if user.is_authenticated %}
-                        <img src="{% static 'img/avatars/avatar.jpg'%}" class="avatar img-fluid rounded me-1"
-                             alt="Charles Hall"/> <span class="text-dark">{{user.username}}</span>
+                        {% for d in user.customer.all %}
+                        <img alt="Charles Hall" class="avatar img-fluid rounded me-1"
+                             src="{{d.profileimg.url}}"/> <span class="text-dark">{{user.username}}</span>
                         </a>
-
+                        {% endfor %}
                         {% endif %}
                     </li>
                 </ul>
             </div>
         </nav>
 
-<!--        LOAD CONTENTHERE-->
+        <!--        LOAD CONTENTHERE-->
         {% block content %}
         <!-- load to here -->
         {% endblock %}

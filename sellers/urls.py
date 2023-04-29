@@ -27,7 +27,7 @@ urlpatterns = [
     path('updatesubcategory/<str:id>', updatesubCategory, name="sellerupdatesubCategory"),
 
     # products
-    path('products/', product,name="sellerproducts"),
+    path('products/', product, name="sellerproducts"),
     path('addproducts/', Addproduct, name="selleraddproducts"),
     path('deleteprod/<int:id>/', deleteproduct, name="sellerdeleteproduct"),
     path('updateproduct/<int:id>/', updateproduct, name="sellerupdateproduct"),

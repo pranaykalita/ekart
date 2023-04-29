@@ -3,9 +3,15 @@
 {% block title %} single Product {% endblock %}
 
 {% block content %}
+
 <!-- Product Area Start -->
 {% include 'Frontend/components/singleprod/product_singleprod.html'%}
- <!-- Product Area End -->
+<!-- Product Area End -->
+
+<input id="cid" type="text" value="{{customer_id}}">
+<button class="btn btn-danger" id="create-cart-btn" type="submit">Create Cart</button>
+
+
 <!-- Feature product area start -->
 {% include 'Frontend/components/home/featureprod_index.html'%}
 <!-- Feature product area End -->

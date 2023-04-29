@@ -34,9 +34,11 @@ def loginRegisterView(request):
                 customer = authenticate(request, email=email, password=password)
                 if customer is not None and customer.is_customer and customer.is_staff == False:
                     login(request, customer)
+                    # store CUSTOMER ID
+                    request.session['customer_id'] = customer.id
                     return redirect('frontendhome')
                 else:
-                    return redirect('frontendlogin')
+                    return redirect('customerlogin')
         return render(request, 'Frontend/pages/loginregister.html')
 
 
@@ -88,6 +90,8 @@ def sellerlogin(request):
             seller = authenticate(request, email=email, password=password)
             if seller is not None and seller.is_seller and seller.is_staff == True:
                 login(request, seller)
+                # store SELLER ID
+                request.session['seller_id'] = seller.id
                 return redirect('sellerdashboard')
             else:
                 return redirect('sellerlogin')

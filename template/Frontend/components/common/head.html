@@ -52,10 +52,10 @@
                             <i class="pe-7s-like"></i>
                         </a>
                         <!-- Single Wedge End -->
-                        <a class="header-action-btn header-action-btn-cart offcanvas-toggle pr-0"
-                           href="#offcanvas-cart">
-                            <i class="pe-7s-shopbag"></i>
-                            <span class="header-action-num">01</span>
+                        <a class="header-action-btn header-action-btn-cart pr-0"
+                           href="{% url 'cartpage'%}">
+                            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                            <span class="header-action-num" id="cartcounthead"></span>
                             <!-- <span class="cart-amount">€30.00</span> -->
                         </a>
                         <a class="header-action-btn header-action-btn-menu offcanvas-toggle d-lg-none"
@@ -93,11 +93,10 @@
                             <i class="pe-7s-like"></i>
                         </a>
                         <!-- Single Wedge End -->
-                        <a class="header-action-btn header-action-btn-cart offcanvas-toggle pr-0"
-                           href="#offcanvas-cart">
-                            <i class="pe-7s-shopbag"></i>
-                            <span class="header-action-num">01</span>
-                            <!-- <span class="cart-amount">€30.00</span> -->
+                        <a class="header-action-btn header-action-btn-cart pr-0"
+                            href="{% url 'cartpage'%}">
+                             <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                            <span class="header-action-num" id="cartcounthead"></span>
                         </a>
                         <a class="header-action-btn header-action-btn-menu offcanvas-toggle d-lg-none"
                            href="#offcanvas-mobile-menu">
@@ -109,7 +108,7 @@
         </div>
     </div>
     <!-- Header action area end -->
-
+<h2>{{ itemcount }}</h2>
     <!-- header navigation area start -->
     <div class="header-nav-area d-none d-lg-block sticky-nav">
         <div class="container-fluid">
@@ -124,7 +123,7 @@
                             <a href="#">{{category.categoryName}} <i class="fa fa-angle-down"></i></a>
                             <ul aria-labelledby="navbarDropdown{{ category.id }}" class="sub-menu">
                                 {% for subcategory in category.subcategories %}
-                                <li class="dropdown position-static"><a href="blog-grid-left-sidebar.html">{{subcategory.subcatgName}}</a>
+                                <li class="dropdown position-static"><a href="{% url 'frontendproducts'%}?cat={{subcategory.subcatgName}}">{{subcategory.subcatgName}}</a>
                                 </li>
                                 {% endfor %}
                             </ul>
@@ -136,6 +135,7 @@
         </div>
     </div>
     <!-- header navigation area end -->
+
     <div class="mobile-search-box d-lg-none">
         <div class="container">
             <!-- mobile search start -->

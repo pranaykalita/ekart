@@ -1,9 +1,17 @@
+//datatables
+$(document).ready(function() {
+  $('table#dataTable').DataTable({
+  });
+});
+
+
+
 $(document).ready(function() {
     // check if username is available
     $('#username').on('change keyup blur', function() {
         var username = $(this).val();
         $.ajax({
-            url: '/api2/accounts/',
+            url: '/api/accounts/',
             type: 'GET',
             data: {username: username},
             success: function(response) {
@@ -28,7 +36,7 @@ $(document).ready(function() {
     $('#email').on('change keyup blur', function() {
         var email = $(this).val();
         $.ajax({
-            url: '/api2/accounts/',
+            url: '/api/accounts/',
             type: 'GET',
             data: {email: email},
             success: function(response) {
@@ -41,10 +49,10 @@ $(document).ready(function() {
                 });
                 if (taken) {
                     $('#error').text('Username already taken.');
-                    $('#registerbtn').prop('disabled', true);
+                    $('#savecategorybtn').prop('disabled', true);
                 } else {
                     $('#error').text('');
-                    $('#registerbtn').prop('disabled', false);
+                    $('#savecategorybtn').prop('disabled', false);
                 }
             }
         });

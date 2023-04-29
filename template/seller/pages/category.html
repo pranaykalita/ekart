@@ -10,7 +10,8 @@
 
         <div class="row mb-3">
             <div class="col">
-                <button class="btn btn-success float-end m-2" data-bs-target="#addSubcategoryModal" data-bs-toggle="modal"
+                <button class="btn btn-success float-end m-2" data-bs-target="#addSubcategoryModal"
+                        data-bs-toggle="modal"
                         type="button ">
                     <i class="fa-solid fa-square-plus"></i>
                     Add Sub Category
@@ -39,7 +40,9 @@
                                         <div class="col">
                                             <div class="mb-3">
                                                 <label class="form-label">Category</label>
-                                                <input class="form-control" name="addcategoryField" placeholder="Insert category Name"
+                                                <div class="text text-danger" id="caterror"></div>
+                                                <input class="form-control" id="insertcategory" name="addcategoryField"
+                                                       placeholder="Insert category Name"
                                                        required type="text">
                                             </div>
                                         </div>
@@ -48,7 +51,7 @@
                                 <div class="modal-footer">
                                     <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">Close
                                     </button>
-                                    <button class="btn btn-primary" type="submit">Save</button>
+                                    <button class="btn btn-primary" id="savecategorybtn" type="submit">Save</button>
                                 </div>
                             </form>
                         </div>
@@ -72,7 +75,9 @@
                                         <div class="col">
                                             <div class="mb-3">
                                                 <label class="form-label">Select Category</label>
-                                                <select aria-label="Default select example" class="form-select" id="pickCategory"
+
+                                                <select aria-label="Default select example" class="form-select"
+                                                        id="pickCategory"
                                                         name="category_name" required>
                                                     <option disabled selected value="selecteddisable">Open this Category
                                                         select menu
@@ -84,6 +89,7 @@
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label">Sub Category</label>
+                                                <div class="text text-danger" id="subcaterror"></div>
                                                 <input class="form-control" id="subcategoryInput" name="subcategory"
                                                        placeholder="Insert subcategory Name"
                                                        required type="text">
@@ -94,7 +100,7 @@
                                 <div class="modal-footer">
                                     <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">Close
                                     </button>
-                                    <button class="btn btn-primary" type="submit">Save</button>
+                                    <button class="btn btn-primary" id="savesubcategorybtn" type="submit">Save</button>
                                 </div>
                             </form>
                         </div>
@@ -135,7 +141,8 @@
                                                         <form action="{% url 'sellerdeletecategory' %}" method="post">
                                                             {% csrf_token %}
 
-                                                            <a class="btn btn-success float-right m-2" data-bs-target="#editcategorybtn{{data.id }}"
+                                                            <a class="btn btn-success float-right m-2"
+                                                               data-bs-target="#editcategorybtn{{data.id }}"
                                                                data-bs-toggle="modal"
                                                                href="#">
                                                                 <i class="fa-solid fa-pen"></i></a>
@@ -154,7 +161,8 @@
                                     </td>
                                 </tr>
                                 <!-- edit category modal-->
-                                <div aria-hidden="true" aria-labelledby="editcategorybtn{{ data.id }}" class="modal fade rounded"
+                                <div aria-hidden="true" aria-labelledby="editcategorybtn{{ data.id }}"
+                                     class="modal fade rounded"
                                      id="editcategorybtn{{ data.id }}" tabindex="-1">
                                     <div class="modal-dialog  modal-dialog-centered">
                                         <div class="modal-content" style="border-radius: 10px;">
@@ -224,7 +232,9 @@
                                     <td>
                                         <div class="row">
                                             <div class="col-6">
-                                                <a class="btn btn-success float-right" data-bs-target="#editsubcategorybtn{{ subdata.id }}" data-bs-toggle="modal"
+                                                <a class="btn btn-success float-right"
+                                                   data-bs-target="#editsubcategorybtn{{ subdata.id }}"
+                                                   data-bs-toggle="modal"
                                                    href="#">
                                                     <i class="fa-solid fa-pen"></i></a>
                                             </div>
@@ -243,7 +253,8 @@
                                     </td>
                                 </tr>
                                 <!--Edit SUbCategory Modal-->
-                                <div aria-hidden="true" aria-labelledby="editsubcategorybtn{{ data.id }}" class="modal fade rounded"
+                                <div aria-hidden="true" aria-labelledby="editsubcategorybtn{{ data.id }}"
+                                     class="modal fade rounded"
                                      id="editsubcategorybtn{{ subdata.id }}" tabindex="-1">
                                     <div class="modal-dialog  modal-dialog-centered">
                                         <div class="modal-content" style="border-radius: 10px;">

@@ -13,12 +13,11 @@ urlpatterns = [
 
     path('', include('frontend.urls')),
 
-    # cart from products
-    path('cart/', include('products.urls')),
+    # cart from order
+    path('cart/', include('orders.urls')),
 
     # api
-    path('api/',include('api.urls')),
-    path('api2/',include('api2.urls')),
+    path('api/', include('api.urls')),
 
     # seller Dashbaord
     path('seller/', include('sellers.urls')),

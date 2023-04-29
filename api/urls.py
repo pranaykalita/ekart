@@ -1,22 +1,27 @@
-from django.urls import path, include
+from django.urls import path
 from .views import *
 
 urlpatterns = [
-    # http://127.0.0.1:8000/api/products/
-    path('products/', ProductApiview.as_view()),
+    # products List and By category And subcategory Also
+    # http://127.0.0.1:8000/api2/products/view/?cat=Fashion
+    path('products/', ProductListWithCategoryView.as_view()),
 
-    # http://127.0.0.1:8000/api/products/18
-    path('products/<int:id>/', ProductsRetriveApiview.as_view()),
+    # single product Retrive
+    # http://127.0.0.1:8000/api2/product/item/1/
+    path('product/item/<int:id>/', ProductRetriveView.as_view()),
+    
+    # category
+    # http://127.0.0.1:8000/api2/categorylist/
+    path('categorylist/', CategorySubcategoryView.as_view()),
 
-    # http://127.0.0.1:8000/api/products/category/?categoryName=T-shirt
-    path('products/category/', ProductbyCategoryApiview.as_view(),name="product_by_category"),
+    # User account
+    # http://127.0.0.1:8000/api2/accounts/
+    path('accounts/', UserAccountView.as_view()),
 
-    # http://127.0.0.1:8000/api/products/subcategory/?subcatgName=T-shirt
-    path('products/subcategory/', ProductbyCategoryApiview.as_view(),name="product_by_subcategory"),
+    # cart View and Create Cart
+    path('cart/', cartCreateLsitallView.as_view()),
 
-    # http://127.0.0.1:8000/api/category/
-    path('category/', CategoryApiview.as_view(), name="category_filter"),
+    # Cart Item Display by userid and cartid
+    path('cart/<int:customeruser>/<str:id>', cartRetriveView.as_view()),
 
-
-
-    ]
+]
