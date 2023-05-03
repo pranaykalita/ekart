@@ -24,4 +24,6 @@ urlpatterns = [
     # Cart Item Display by userid and cartid
     path('cart/<int:customeruser>/<str:id>', cartRetriveView.as_view()),
 
+
+
 ]

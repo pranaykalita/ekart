@@ -66,8 +66,8 @@
                                                         <select aria-label="category" class="form-select" id="category"
                                                                 name="itemcategory">
                                                             {% for data in categories %}
-                                                            <option value="{{data.id}}">{{ data.categoryName}}</option>
-                                                            {%endfor%}
+                                                                <option value="{{ data.id }}">{{ data.categoryName }}</option>
+                                                            {% endfor %}
                                                         </select>
                                                     </div>
                                                 </div>
@@ -77,8 +77,8 @@
                                                         <select aria-label="subcategory" class="form-select"
                                                                 id="subCategory" name="itemsubcategory">
                                                             {% for data in subcategories %}
-                                                            <option value="{{ data.id }}">{{ data.subcatgName}}</option>
-                                                            {%endfor%}
+                                                                <option value="{{ data.id }}">{{ data.subcatgName }}</option>
+                                                            {% endfor %}
                                                         </select>
                                                     </div>
                                                 </div>
@@ -101,9 +101,24 @@
                                             </div>
 
                                             <div class="mb-3">
-                                                <label class="form-label" for="ProductImage">Product Image</label>
+                                                <label class="form-label" for="ProductImage">Main Image</label>
                                                 <input class="form-control" id="ProductImage" name="itemimg"
                                                        required type="file">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label" for="ProductImage">Image 1</label>
+                                                <input class="form-control"  name="itemimg1"
+                                                       type="file">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label" for="ProductImage">Image 2</label>
+                                                <input class="form-control"  name="itemimg2"
+                                                       type="file">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label" for="ProductImage">Image 3</label>
+                                                <input class="form-control" name="itemimg3"
+                                                       type="file">
                                             </div>
                                         </div>
                                     </div>
@@ -140,13 +155,13 @@
                                 {% for data in productList %}
                                 <tr>
                                     <td>
-                                        <img alt="{{data.product.item}}"
-                                             class="avatar img-fluid rounded me-1" src="{{data.image.url}}"/>
+                                        <img alt="{{ data.product.item }}"
+                                             class="avatar img-fluid rounded me-1" src="{{ data.image.url }}"/>
                                     </td>
-                                    <td>{{data.item}}</td>
-                                    <td>{{data..price}} ₹</td>
-                                    <td>{{data.quantity}}</td>
-                                    <td>{{data.category}}</td>
+                                    <td>{{ data.item }}</td>
+                                    <td>{{ data..price }} ₹</td>
+                                    <td>{{ data.quantity }}</td>
+                                    <td>{{ data.category }}</td>
                                     <td>
                                         <div class="row">
                                             <div class="col-3 col-sm-12">
@@ -156,18 +171,18 @@
                                                               method="post">
                                                             {% csrf_token %}
 
-                                                            <button class="btn btn-success m-2" data-bs-target="#productData{{data.id }}"
+                                                            <button class="btn btn-success m-2" data-bs-target="#productData{{ data.id }}"
                                                                     data-bs-toggle="modal"
                                                                     type="button">
                                                                 View
                                                             </button>
-                                                            <button class="btn btn-success m-2" data-bs-target="#editProductmodal{{data.id }}"
+                                                            <button class="btn btn-success m-2" data-bs-target="#editProductmodal{{ data.id }}"
                                                                     data-bs-toggle="modal"
                                                                     type="button">
                                                                 Edit
                                                             </button>
                                                             <input name="category_name" type="hidden"
-                                                                   value="{{data.id}}">
+                                                                   value="{{ data.id }}">
                                                             <button class="btn btn-danger" type="submit">
                                                                 <i class="fa-solid fa-trash"></i>
                                                             </button>
@@ -180,14 +195,14 @@
                                     </td>
                                 </tr>
                                 <!-- show product data modal-->
-                                <div aria-hidden="true" aria-labelledby="productData{{data.id}}Label" class="modal fade"
+                                <div aria-hidden="true" aria-labelledby="productData{{ data.id }}Label" class="modal fade"
                                      data-bs-backdrop="static" data-bs-keyboard="false"
-                                     id='productData{{data.id}}' tabindex="-1">
+                                     id='productData{{ data.id }}' tabindex="-1">
                                     <div class="modal-dialog modal-dialog-centered modal-lg">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="staticBackdropLabel">
-                                                    {{data.SKU}}</h5>
+                                                    {{ data.SKU }}</h5>
                                                 <button aria-label="Close" class="btn-close" data-bs-dismiss="modal"
                                                         type="button"></button>
                                             </div>
@@ -195,30 +210,30 @@
                                                 <div class="row">
                                                     <div class="col-12 col-sm-6">
                                                         <img alt=""
-                                                             class="itemdetailsmodalimg" src="{{data.image.url}}">
+                                                             class="itemdetailsmodalimg" src="{{ data.image.url }}">
                                                     </div>
 
                                                     <div class="col-12 col-sm-6">
-                                                        <h3>{{data.item}}</h3>
-                                                        <span class="badge bg-primary">{{data.category}}</span>
+                                                        <h3>{{ data.item }}</h3>
+                                                        <span class="badge bg-primary">{{ data.category }}</span>
                                                         <span
-                                                                class="badge bg-secondary">{{data.subCategory}}</span>
+                                                                class="badge bg-secondary">{{ data.subCategory }}</span>
 
-                                                        <p>{{data.product.about}}</p>
+                                                        <p>{{ data.product.about }}</p>
 
                                                         <div class="py-3">
                                                             <h3><strong>Description</strong></h3>
                                                             <div>
                                                                 {% autoescape off %}
-                                                                {{data.product.description}}
+                                                                {{ data.product.description }}
                                                                 {% endautoescape %}
                                                             </div>
 
                                                         </div>
                                                         <h4 class="price">price: <span
-                                                                class="text-danger">${{data.price}}</span>
+                                                                class="text-danger">${{ data.price }}</span>
                                                         </h4>
-                                                        <h5>Quantity: <span>{{data.quantity}}</span></h5>
+                                                        <h5>Quantity: <span>{{ data.quantity }}</span></h5>
 
 
                                                     </div>
@@ -228,8 +243,8 @@
                                     </div>
                                 </div>
                                 <!--  update product-->
-                                <div aria-hidden="true" aria-labelledby="editProductmodal{{data.id }}Label" class="modal fade rounded"
-                                     id="editProductmodal{{data.id }}" tabindex="-1">
+                                <div aria-hidden="true" aria-labelledby="editProductmodal{{ data.id }}Label" class="modal fade rounded"
+                                     id="editProductmodal{{ data.id }}" tabindex="-1">
                                     <div class="modal-dialog  modal-dialog-centered">
                                         <div class="modal-content" style="border-radius: 10px;">
                                             <form action="{% url 'sellerupdateproduct' data.id %}" enctype="multipart/form-data"
@@ -248,7 +263,7 @@
                                                                 <input class="form-control"
                                                                        disabled
                                                                        style="border-radius: 10px;"
-                                                                       type="text" value="{{data.product.SKU}}">
+                                                                       type="text" value="{{ data.product.SKU }}">
                                                             </div>
                                                             <div class="mb-3">
                                                                 <label class="form-label"
@@ -257,7 +272,7 @@
                                                                        placeholder="Name"
                                                                        required
                                                                        style="border-radius: 10px;" type="text"
-                                                                       value="{{data.item}}">
+                                                                       value="{{ data.item }}">
                                                             </div>
                                                             <div class="row">
                                                                 <div class="col-6">
@@ -268,7 +283,7 @@
                                                                                placeholder="Price"
                                                                                required
                                                                                step="0.01" type="number"
-                                                                               value="{{data.price}}">
+                                                                               value="{{ data.price }}">
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-6">
@@ -277,7 +292,7 @@
                                                                         <input class="form-control" name="itemqty"
                                                                                placeholder="Quantity"
                                                                                required
-                                                                               type="number" value="{{data.quantity}}">
+                                                                               type="number" value="{{ data.quantity }}">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -289,10 +304,10 @@
                                                                                 class="form-select"
                                                                                 name="itemcategory">
                                                                             {% for data in categories %}
-                                                                            <option value="{{data.id}}">
-                                                                                {{data.categoryName}}
-                                                                            </option>
-                                                                            {%endfor%}
+                                                                                <option value="{{ data.id }}">
+                                                                                    {{ data.categoryName }}
+                                                                                </option>
+                                                                            {% endfor %}
                                                                         </select>
                                                                     </div>
                                                                 </div>
@@ -303,10 +318,10 @@
                                                                                 class="form-select"
                                                                                 name="itemsubcategory">
                                                                             {% for data in subcategories %}
-                                                                            <option value="{{data.id }}">
-                                                                                {{data.subcatgName}}
-                                                                            </option>
-                                                                            {%endfor%}
+                                                                                <option value="{{ data.id }}">
+                                                                                    {{ data.subcatgName }}
+                                                                                </option>
+                                                                            {% endfor %}
                                                                         </select>
                                                                     </div>
                                                                 </div>
@@ -316,7 +331,7 @@
                                                                 <label class="form-label" for="About">About</label>
                                                                 <textarea class="form-control"
                                                                           name="itemabout"
-                                                                          required rows="3">{{data.product.about}}</textarea>
+                                                                          required rows="3">{{ data.product.about }}</textarea>
                                                                 <small class="form-text text-muted">maximum 150 words |
                                                                     support
                                                                     HTML </small>
@@ -327,7 +342,7 @@
                                                                        for="Description">Description</label>
                                                                 <textarea class="form-control" name="itemdescription"
                                                                           required
-                                                                          rows="3">{{data.product.description}}</textarea>
+                                                                          rows="3">{{ data.product.description }}</textarea>
                                                                 <small class="form-text text-muted">maximum 500 words |
                                                                     support
                                                                     HTML </small>

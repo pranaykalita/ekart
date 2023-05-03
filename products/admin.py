@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import Category,SubCategory,Product,ProductDetail
+from .models import *
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
@@ -12,3 +12,4 @@ class Admin(admin.ModelAdmin):
 
 admin.site.register(Category)
 admin.site.register(SubCategory)
+admin.site.register(ProductImage)

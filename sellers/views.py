@@ -1,22 +1,20 @@
-from django.conf import settings
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.utils import timezone
-from products.models import Category, SubCategory, Product, ProductDetail
-from django.contrib.auth.decorators import login_required
-from accounts.models import customerUser,customerData
+from accounts.models import customerUser
+from products.models import Category, SubCategory, Product, ProductDetail, ProductImage
+
 
 # SELLER ID SESSION
 def sellersession(request):
     seller_id = request.session.get('seller_id')
-    seller =  customerUser.objects.get(id=seller_id)
+    seller = customerUser.objects.get(id=seller_id)
     return seller
 
 
 # dashboard
 @login_required(login_url='sellerlogin')
 def dashboard(request):
-
-
     productcount = Product.objects.count()
     catCount = Category.objects.count()
     subcatCount = SubCategory.objects.count()
@@ -148,6 +146,7 @@ def updatesubCategory(request, id):
 @login_required(login_url='sellerlogin')
 def Addproduct(request):
     if request.method == "POST":
+
         itemname = request.POST.get("itemname")
         itemprice = request.POST.get("itemprice")
         itemqty = request.POST.get("itemqty")
@@ -155,24 +154,50 @@ def Addproduct(request):
         category = Category.objects.get(pk=itemcategoryID)
         itemsubCategoryID = request.POST.get("itemsubcategory")
         subcategory = SubCategory.objects.get(pk=itemsubCategoryID)
+
         itemimg = request.FILES.get("itemimg")
+
+        itemimg1 = request.FILES.get("itemimg1")
+        itemimg2 = request.FILES.get("itemimg2")
+        itemimg3 = request.FILES.get("itemimg3")
 
         # seller
         seller_id = request.session.get('seller_id')
-        seller =  customerUser.objects.get(id=seller_id)
+        seller = customerUser.objects.get(id=seller_id)
 
+        # productDetails
         itemAbout = request.POST.get("itemabout")
         itemDesc = request.POST.get("itemdescription")
         sku = request.POST.get("sku")
 
-        saveprod = Product(item=itemname, price=itemprice, quantity=itemqty, category=category, subCategory=subcategory,
+        prodMain = Product(item=itemname, price=itemprice, quantity=itemqty, category=category, subCategory=subcategory,
                            seller=seller, image=itemimg)
-        print(seller)
-        saveprod.save()
-        prod_id = saveprod.id
+
+        prodMain.save()
+
+        prod_id = prodMain.id
         product = Product.objects.get(pk=prod_id)
-        saveproddetails = ProductDetail(product=product, about=itemAbout, SKU=sku, description=itemDesc)
-        saveproddetails.save()
+
+        prod = ProductDetail(product=product, about=itemAbout, SKU=sku, description=itemDesc)
+        prod.save()
+
+        if itemimg or itemimg1 or itemimg2 or itemimg3:
+            if itemimg:
+                prodimg1 = ProductImage(product=product, image=itemimg)
+                prodimg1.save()
+
+            if itemimg1:
+                prodimg1 = ProductImage(product=product, image=itemimg1)
+                prodimg1.save()
+
+            if itemimg2:
+                prodimg2 = ProductImage(product=product, image=itemimg2)
+                prodimg2.save()
+
+            if itemimg3:
+                prodimg3 = ProductImage(product=product, image=itemimg3)
+                prodimg3.save()
+
         return redirect('sellerproducts')
 
 

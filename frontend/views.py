@@ -1,9 +1,6 @@
 from django.shortcuts import render
 import requests
 import json
-from products.models import Category,Product
-from django.conf import settings
-from accounts.models import *
 
 def get_categories():
     response = requests.get('http://127.0.0.1:8000/api/categorylist/')
@@ -35,9 +32,8 @@ def singleproductView(request, id):
     producturl = requests.get(url)
     products = producturl.json()
     customer = request.session.get('customer_id')
-    print(customer)
     context = {'product': products, 'categories': category, 'customer_id':customer}
-
+    print(products)
     return render(request, 'Frontend/pages/singleprod.html', context)
 
 

@@ -1,6 +1,7 @@
 from rest_framework import serializers
-from accounts.models import *
-from orders.models import *
+
+from cart.models import *
+from products.models import *
 
 
 # SubcategorySerializer
@@ -33,18 +34,25 @@ class ProductdetailSerializer(serializers.ModelSerializer):
         fields = ['about', 'description', 'SKU']
 
 
-# product Details
+class ProductimgsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductImage
+        fields = ['image']
+
+
+# product Details single
 class ProductSerializer(serializers.ModelSerializer):
     product = ProductdetailSerializer()
     category = CategorySerializer()
     subCategory = SubcategorySerializer()
+    productimg = ProductimgsSerializer(many=True)
 
     class Meta:
         model = Product
-        fields = ['id', 'item', 'price', 'quantity', 'category', 'subCategory', 'product', 'image']
+        fields = ['id', 'productimg', 'item', 'price', 'quantity', 'category', 'subCategory', 'product', 'image', 'productimg']
 
 
-# Lsit accounts
+# Lsit registered accounts
 class AccountSerializer(serializers.ModelSerializer):
     class Meta:
         model = customerUser
@@ -55,13 +63,15 @@ class AccountSerializer(serializers.ModelSerializer):
 class CartproductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ('id','item', 'price', 'image',)
+        fields = ('id', 'item', 'price', 'image',)
+
 
 # Cart Display Serializer
 class CartSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cart
         fields = '__all__'
+
 
 # cart items only Serializer
 class Itemsincart(serializers.ModelSerializer):
@@ -75,21 +85,20 @@ class Itemsincart(serializers.ModelSerializer):
     def total(self, cartitems: CartItem):
         return cartitems.quantity * cartitems.product.price
 
+
 # Cart Items Serializer
 class CartDataSerializer(serializers.ModelSerializer):
     id = serializers.UUIDField(read_only=True)
     items = Itemsincart(many=True)
     GrandTotal = serializers.SerializerMethodField(method_name='main_total')
+
     class Meta:
         model = Cart
         fields = ['id', 'customeruser', 'items', "GrandTotal"]
 
-    def main_total(self, cart:Cart):
+    def main_total(self, cart: Cart):
         items = cart.items.all()
-        sum =0
+        sum = 0
         for item in items:
-            sum += item.quantity*item.product.price
+            sum += item.quantity * item.product.price
         return sum
-
-
-

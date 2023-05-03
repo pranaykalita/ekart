@@ -48,8 +48,10 @@ INSTALLED_APPS = [
     'accounts',
     'sellers',
     'frontend',
+    'cart',
 
     # api
+
     'api',
     'rest_framework',
 ]
