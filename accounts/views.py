@@ -1,7 +1,7 @@
-from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
+from django.shortcuts import render, redirect
+
 from .models import *
-from django.conf import settings
 
 
 # Customer Login Register
@@ -67,14 +67,15 @@ def sellerRegister(request):
         gender = request.POST.get('gender')
         ccode = request.POST.get('ccode')
         phone = request.POST.get('phone')
-        profileIMG = request.FILES.get('profileImg')
+        profiler = request.FILES.get("profileImg")
 
         seller.customer.create(
             gender=gender,
             countrycode=ccode,
             mobileno=phone,
-            profileimg=profileIMG,
+            profileimg=profiler,
         )
+        print(gender, phone, profiler )
         return redirect('sellerlogin')
     return render(request, 'seller/pages/sellerRegister.html')
 
