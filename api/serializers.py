@@ -102,3 +102,6 @@ class CartDataSerializer(serializers.ModelSerializer):
         for item in items:
             sum += item.quantity * item.product.price
         return sum
+
+
+
