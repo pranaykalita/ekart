@@ -1,58 +1,63 @@
 from django.db.models import Q
-from django.shortcuts import render, get_object_or_404
-from rest_framework import filters
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.generics import GenericAPIView
-from rest_framework.mixins import CreateModelMixin,RetrieveModelMixin,UpdateModelMixin,DestroyModelMixin,ListModelMixin
+from rest_framework.mixins import ListModelMixin, RetrieveModelMixin, UpdateModelMixin, CreateModelMixin
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
 
 from .serializers import *
-from products.models import *
-from accounts.models import customerUser
+from .tests import MultipleFieldLookupORMixin
+
+# pagination
 
 
-# #######################
-# Multiple LookUP field Custom Mixin
-class MultipleFieldLookupORMixin(object):
-    def get_object(self):
-        queryset = self.get_queryset()             # Get the base.html queryset
-        queryset = self.filter_queryset(queryset)  # Apply any filter backends
-        filter = {}
-        for field in self.lookup_fields:
-            try:                                  # Get the result with one or more fields.
-                filter[field] = self.kwargs[field]
-            except Exception:
-                pass
-        return get_object_or_404(queryset, **filter)  # Lookup the object
-# #######################
+##################### ACCOUNT #####################
 
-
-# List all Username And Emails
-class UserAccountView(ListModelMixin,GenericAPIView):
-    queryset = customerUser.objects.all()
-    serializer_class = AccountSerializer
+# accounts LIST
+class AccountsList(ListModelMixin, GenericAPIView):
+    queryset = CustomerUser.objects.all()
+    serializer_class = accountSerializer
 
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
 
-# List Category With Subcategory
-class CategorySubcategoryView(ListModelMixin,GenericAPIView):
+
+##################### CATEGORY AND SUB #####################
+
+# Category and SubCategory
+class CategorySubList(ListModelMixin, GenericAPIView):
     queryset = Category.objects.all()
-    serializer_class = CategorySubcategorySerializer
+    serializer_class = categorySerializer
 
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
 
-# List All Products
-class ProductListWithCategoryView(ListModelMixin, RetrieveModelMixin, GenericAPIView):
+class CategoryList(ListModelMixin,GenericAPIView):
+    queryset = Category.objects.all()
+    serializer_class = categoryOnlySerializer
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
+class SubcategoryList(ListModelMixin,GenericAPIView):
+    queryset = Subcategory.objects.all()
+    serializer_class = subcategorySerializer
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
+
+##################### PRODUCT #####################
+
+# List All Products Filter By Category,SubCategory,Size,Variants
+class ProductList(ListModelMixin, MultipleFieldLookupORMixin, GenericAPIView):
     serializer_class = ProductSerializer
-    filter_backends = [filters.SearchFilter]
-    search_fields = ['category__categoryName', 'subCategory__subcatgName']
+    lookup_field = ('category__name', 'subcategory__name', 'productdetail__size', 'productdetails__variant')
 
     def get_queryset(self):
-        category = self.request.query_params.get('cat', None)
-        if category:
-            search = Q(category__categoryName=category) | Q(subCategory__subcatgName=category)
+        keyword = self.request.query_params.get('filter', None)
+        if keyword:
+            search = Q(category__name=keyword) | Q(subcategory__name=keyword) | Q(productdetail__size=keyword) | Q(productdetail__variant=keyword)
             queryset = Product.objects.filter(search).all()
         else:
             queryset = Product.objects.all()
@@ -61,18 +66,21 @@ class ProductListWithCategoryView(ListModelMixin, RetrieveModelMixin, GenericAPI
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
 
-# List Single Products
-class ProductRetriveView(RetrieveModelMixin, GenericAPIView):
+
+# List Single Product By product ID
+class ProductRetrive(RetrieveModelMixin, GenericAPIView):
     queryset = Product.objects.all()
-    serializer_class = ProductSerializer
+    serializer_class = singleProductSerializer
     lookup_field = 'id'
 
     def get(self, request, *args, **kwargs):
         return self.retrieve(request, *args, **kwargs)
 
-# cart lsit All items and Create If Not present
-class cartCreateLsitallView(ListModelMixin,CreateModelMixin, GenericAPIView):
-    queryset = Cart.objects.all()
+
+##################### CART #####################
+
+class cartListView(ListModelMixin, CreateModelMixin, GenericAPIView):
+    queryset =Cart.objects.all()
     serializer_class = CartSerializer
     authentication_classes = [SessionAuthentication]
     permission_classes = [IsAuthenticated]
@@ -84,14 +92,45 @@ class cartCreateLsitallView(ListModelMixin,CreateModelMixin, GenericAPIView):
         return self.create(request, *args, **kwargs)
 
     def perform_create(self, serializer):
-        serializer.save(customeruser=self.request.user)
+        serializer.save(customer=self.request.user)
 
-# cart Single View
-class cartRetriveView(RetrieveModelMixin,MultipleFieldLookupORMixin, GenericAPIView):
-    queryset = Cart.objects.all()
+
+class cartRetriveView(RetrieveModelMixin, MultipleFieldLookupORMixin, GenericAPIView):
+    queryset =Cart.objects.all()
     serializer_class = CartDataSerializer
-    lookup_field = lookup_fields = ('id', 'customeruser')
+    lookup_field = lookup_fields = ('id', 'customer')
 
     def get(self, request, *args, **kwargs):
         return self.retrieve(request, *args, **kwargs)
 
+
+class orderlist(ListModelMixin,GenericAPIView):
+    queryset = Order.objects.all()
+    serializer_class = Orderserializer
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
+class orderRetrive(RetrieveModelMixin,MultipleFieldLookupORMixin,GenericAPIView):
+    queryset = Order.objects.all()
+    serializer_class = Orderserializer
+    lookup_field = lookup_fields = ('id', 'customer')
+
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+
+
+
+class allorderView(ListModelMixin,GenericAPIView):
+    queryset = Order.objects.all()
+    serializer_class = AllorderSerializer
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
+class RetriveorderView(RetrieveModelMixin,GenericAPIView):
+    queryset = Order.objects.all()
+    serializer_class = AllorderSerializer
+    lookup_field = 'id'
+
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)

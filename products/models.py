@@ -1,113 +1,61 @@
-from PIL import Image
-from django.db import models
+import uuid
 
-from accounts.models import customerUser
+from account.models import *
+from category.models import *
+from .imageResize import resize_image
 
 
 # Create your models here.
 
-# category
-class Category(models.Model):
-    categoryName = models.CharField(max_length=20)
-    createdOn = models.DateTimeField(auto_now_add=True)
-    updatedOn = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return self.categoryName
-
-
-# categoryid
-class SubCategory(models.Model):
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='subcategories')
-    subcatgName = models.CharField(max_length=50, default="")
-    createdOn = models.DateTimeField(auto_now_add=True)
-    updatedOn = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return self.subcatgName
-
-
-# products
 class Product(models.Model):
-    item = models.CharField(max_length=100)
+    name = models.CharField(max_length=255)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     quantity = models.IntegerField()
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='productcategories')
-    subCategory = models.ForeignKey(SubCategory, on_delete=models.CASCADE, related_name='productsubcategories')
-    seller = models.ForeignKey(customerUser, on_delete=models.CASCADE, related_name='selleraccount')
-    image = models.ImageField(upload_to='media/productimg')
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='category', default=None)
+    subcategory = models.ForeignKey(Subcategory, on_delete=models.CASCADE, related_name='subcategory')
+    mainimage = models.ImageField(upload_to='products/productImg/')
+    created_at = models.DateTimeField(auto_now_add=True)
+    seller = models.ForeignKey(CustomerUser, on_delete=models.CASCADE, related_name='seller')
 
-    # resize the image to set size on script
-    def save(self):
-        super().save()  # saving image first
+    # resize image to perfect fit
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)  # saving image first
 
-        img = Image.open(self.image.path)  # Open image using self
-        width, height = img.size
-        ratio = 1
-
-        if img.height > 500 or img.width > 500:
-            ratio = min(500 / width, 500 / height)
-        elif img.height < 500 or img.width < 500:
-            ratio = 1
-
-        new_width = round(width * ratio)
-        new_height = round(height * ratio)
-
-        # resize the image
-        img = img.resize((new_width, new_height), Image.ANTIALIAS)
-
-        # create a new image with the target size, centered on a black background
-        background = Image.new('RGBA', (500, 500), (0, 0, 0, 255))
-        x = (500 - new_width) // 2
-        y = (500 - new_height) // 2
-        background.paste(img, (x, y))
-
-        img.save(self.image.path)
+        img = resize_image(self.mainimage.path)
+        img.save(self.mainimage.path)
 
     def __str__(self):
-        return self.item
+        return self.name
 
 
-class ProductDetail(models.Model):
-    product = models.OneToOneField(Product, on_delete=models.CASCADE, related_name='product')
+def generate_sku():
+    uuid_string = str(uuid.uuid4()).replace('-', '')[:8]
+    sku = 'SKU-' + uuid_string.upper()
+    return sku
+
+
+class Productdetails(models.Model):
+    product = models.OneToOneField(Product, verbose_name="Product Name", on_delete=models.CASCADE, related_name='productdetail')
     about = models.TextField()
-    SKU = models.CharField(max_length=100, default="")
     description = models.TextField()
+    size = models.CharField(max_length=255)
+    variant = models.CharField(max_length=255)
+    SKU = models.CharField(max_length=255, default=generate_sku, unique=True)
 
     def __str__(self):
-        return f"{self.product.item} details"
+        return f"{self.product.name} details"
 
 
-class ProductImage(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='productimg')
-    image = models.ImageField(upload_to='media/productimg/itemimage/')
+class Productimage(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name="Product Name", related_name='productimg')
+    image = models.ImageField(upload_to='products/productImg/')
 
-    # resize the image to set size on script
-    def save(self):
-        super().save()  # saving image first
+    # resize image to perfect fit
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)  # saving image first
 
-        img = Image.open(self.image.path)  # Open image using self
-        width, height = img.size
-        ratio = 1
-
-        if img.height > 500 or img.width > 500:
-            ratio = min(500 / width, 500 / height)
-        elif img.height < 500 or img.width < 500:
-            ratio = 1
-
-        new_width = round(width * ratio)
-        new_height = round(height * ratio)
-
-        # resize the image
-        img = img.resize((new_width, new_height), Image.ANTIALIAS)
-
-        # create a new image with the target size, centered on a black background
-        background = Image.new('RGBA', (500, 500), (0, 0, 0, 255))
-        x = (500 - new_width) // 2
-        y = (500 - new_height) // 2
-        background.paste(img, (x, y))
-
+        img = resize_image(self.image.path)
         img.save(self.image.path)
 
     def __str__(self):
-        return f"{self.product.item} image"
+        return f"{self.product.name} image"

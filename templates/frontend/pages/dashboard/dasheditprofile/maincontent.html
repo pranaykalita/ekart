@@ -1,0 +1,61 @@
+<!--====== Section 2 ======-->
+<div class="u-s-p-b-60">
+
+    <!--====== Section Content ======-->
+    <div class="section__content">
+        <div class="dash">
+            <div class="container">
+                <div class="row">
+                    {% include '../commonsidecounter.html' %}
+                    <div class="col-lg-9 col-md-12">
+                        <div class="dash__box dash__box--shadow dash__box--radius dash__box--bg-white">
+                            <div class="dash__pad-2">
+                                <h1 class="dash__h1 u-s-m-b-14">Edit Profile</h1>
+
+                                <span class="dash__text u-s-m-b-30">Looks like you haven't update your profile</span>
+                                <div class="dash__link dash__link--secondary u-s-m-b-30">
+
+                                    <a data-modal="modal" data-modal-id="#dash-newsletter">Subscribe Newsletter</a></div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <form method="post" class="dash-edit-p">
+                                            {% csrf_token %}
+                                            <div class="">
+                                                <div class="u-s-m-b-30">
+
+                                                    <label class="gl-label" for="reg-fname">USER NAME *</label>
+
+                                                    <input class="input-text input-text--primary-style" type="text" name="reg-uname" value="{{ customer.username }}">
+                                                </div>
+                                                <div class="u-s-m-b-30">
+
+                                                    <label class="gl-label" for="reg-fname">FIRST NAME *</label>
+
+                                                    <input class="input-text input-text--primary-style" type="text" name="reg-fname" value="{{ customer.firstname }}"></div>
+                                                <div class="u-s-m-b-30">
+
+                                                    <label class="gl-label" for="reg-lname">LAST NAME *</label>
+
+                                                    <input class="input-text input-text--primary-style" type="text" name="reg-lname"  value="{{ customer.lastname }}"></div>
+                                                <div class="u-s-m-b-30">
+
+                                                    <label class="gl-label" for="reg-mobile">Mobile *</label>
+
+                                                    <input class="input-text input-text--primary-style" type="text" name="reg-mobile"  value="{{ customer_detail.mobile }}"></div>
+                                            </div>
+
+
+                                            <button class="btn btn--e-brand-b-2" type="submit">SAVE</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--====== End - Section Content ======-->
+</div>
+<!--====== End - Section 2 ======-->

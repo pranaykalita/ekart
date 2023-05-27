@@ -1,28 +1,34 @@
 from django.urls import path
+
 from .views import *
 
 urlpatterns = [
-    # products List and By category And subcategory Also
-    # http://127.0.0.1:8000/api2/products/view/?cat=Fashion
-    path('products/', ProductListWithCategoryView.as_view()),
 
-    # single product Retrive
-    # http://127.0.0.1:8000/api2/product/item/1/
-    path('product/item/<int:id>/', ProductRetriveView.as_view()),
-    
-    # category
-    # http://127.0.0.1:8000/api2/categorylist/
-    path('categorylist/', CategorySubcategoryView.as_view()),
+    #
+    path('accounts/', AccountsList.as_view(), name='accountsAPI'),
 
-    # User account
-    # http://127.0.0.1:8000/api2/accounts/
-    path('accounts/', UserAccountView.as_view()),
+    # GET /api/category/
+    path('combinecategory/', CategorySubList.as_view(), name='categorylistAPI'),
+    path('category/', CategoryList.as_view(), name='categoryAPI'),
+    path('subcategory/', SubcategoryList.as_view(), name='subcategoryAPI'),
 
-    # cart View and Create Cart
-    path('cart/', cartCreateLsitallView.as_view()),
+    # GET /api/products/
+    # 127.0.0.1:8000/api/products/?filter=Fashion
+    path('products/', ProductList.as_view(), name='productslistAPI'),
+    # GET /api/products/1/
+    path('products/<int:id>/', ProductRetrive.as_view(), name='productsingleAPI'),
 
-    # Cart Item Display by userid and cartid
-    path('cart/<int:customeruser>/<str:id>', cartRetriveView.as_view()),
+    # GET /api/cart/
+    path('cart/', cartListView.as_view(), name='cartlist'),
+    # GET /api/cart/cabcf175-95d5-417a-9ecb-c829af52f7ce/
+    path('cart/<str:id>/<str:customer>/', cartRetriveView.as_view(), name='cartdatalist'),
+
+
+    path('orders/<str:customer>/', orderlist.as_view(), name='orderapi'),
+    path('orders/<str:customer>/<str:id>/', orderRetrive.as_view(), name='orderretrive'),
+
+    path('allorders/', allorderView.as_view(), name='allorders'),
+    path('orderdetails/<int:id>/', RetriveorderView.as_view(), name='orderdetails'),
 
 
 

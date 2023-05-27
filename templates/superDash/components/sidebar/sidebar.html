@@ -1,0 +1,39 @@
+{% load  static %}
+<!-- ========== Left Sidebar Start ========== -->
+<div class="leftside-menu">
+
+    <!-- LOGO -->
+    <a href="{% url 'SupDash' %}" class="logo text-center logo-light">
+
+                    <span class="logo-lg p-4">
+                        <h4>MANAGEMENT</h4>
+
+                    </span>
+        <span class="logo-sm p-4">
+                        <h4>MANAGEMENT</h4>
+                    </span>
+    </a>
+
+    <!-- LOGO -->
+    <a href="{% url 'SupDash' %}" class="logo text-center logo-dark">
+                    <span class="logo-lg p-4">
+                        <h4>MANAGEMENT</h4>
+                    </span>
+        <span class="logo-sm p-4">
+                        <h4>MANAGEMENT</h4>
+                    </span>
+    </a>
+
+    <div class="h-100" id="leftside-menu-container" data-simplebar="">
+
+        <!--- Sidemenu -->
+        {% include './sidemenu.html' %}
+        <!-- End Sidebar -->
+
+        <div class="clearfix"></div>
+
+    </div>
+    <!-- Sidebar -left -->
+
+</div>
+<!-- Left Sidebar End -->

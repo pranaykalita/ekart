@@ -1,81 +1,116 @@
 from rest_framework import serializers
 
 from cart.models import *
+from orders.models import *
 from products.models import *
 
 
-# SubcategorySerializer
-class SubcategorySerializer(serializers.ModelSerializer):
+###################### Accounts ######################
+
+# account data
+class accountdetailsSerializer(serializers.ModelSerializer):
     class Meta:
-        model = SubCategory
-        fields = ['subcatgName']
+        model = Customerdetail
+        fields = ('profileimg',)
 
 
-# Category Serializer
-class CategorySerializer(serializers.ModelSerializer):
+# account Display
+class accountSerializer(serializers.ModelSerializer):
+    profileImage = accountdetailsSerializer(source='customer')
+
+    class Meta:
+        model = CustomerUser
+        fields = ['username', 'email', 'profileImage']
+
+
+###################### Category ######################
+
+# subcategory
+class subcategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Subcategory
+        fields = ['id', 'name']
+
+
+# category
+class categorySerializer(serializers.ModelSerializer):
+    subcategory = subcategorySerializer(many=True)
+
     class Meta:
         model = Category
-        fields = ['categoryName']
+        fields = ['id', 'name', 'subcategory']
 
 
-# List Category With SubCategory
-class CategorySubcategorySerializer(serializers.ModelSerializer):
-    subcategories = SubcategorySerializer(many=True, read_only=True)
-
+class categoryOnlySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = ['categoryName', 'subcategories']
+        fields = ['id', 'name']
 
 
-# product Details
-class ProductdetailSerializer(serializers.ModelSerializer):
+###################### Products ######################
+
+# productDetails
+class ProductdetailsSerializer(serializers.ModelSerializer):
     class Meta:
-        model = ProductDetail
-        fields = ['about', 'description', 'SKU']
+        model = Productdetails
+        fields = ['about', 'description', 'size', 'variant', 'SKU']
 
 
-class ProductimgsSerializer(serializers.ModelSerializer):
+class ProductimagesSerializer(serializers.ModelSerializer):
     class Meta:
-        model = ProductImage
+        model = Productimage
         fields = ['image']
 
 
-# product Details single
+# product Images
 class ProductSerializer(serializers.ModelSerializer):
-    product = ProductdetailSerializer()
-    category = CategorySerializer()
-    subCategory = SubcategorySerializer()
-    productimg = ProductimgsSerializer(many=True)
+    category = categoryOnlySerializer()
+    subcategory = subcategorySerializer()
+
+    productdetail = ProductdetailsSerializer()
+    seller = serializers.SlugRelatedField(slug_field='username', queryset=CustomerUser.objects.all())
+    sellerid = serializers.IntegerField(source='seller.id')
 
     class Meta:
         model = Product
-        fields = ['id', 'productimg', 'item', 'price', 'quantity', 'category', 'subCategory', 'product', 'image', 'productimg']
+        fields = ['id', 'name', 'price', 'quantity', 'category', 'subcategory', 'seller',
+                  'sellerid', 'productdetail', 'mainimage']
 
 
-# Lsit registered accounts
-class AccountSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = customerUser
-        fields = ['username', 'email']
+# Single Product
+class singleProductSerializer(serializers.ModelSerializer):
+    productdetail = ProductdetailsSerializer()
+    productimg = ProductimagesSerializer(many=True)
+    seller = serializers.SlugRelatedField(slug_field='username', queryset=CustomerUser.objects.all())
+    category = categoryOnlySerializer()
+    subcategory = subcategorySerializer()
 
-
-# productSerializer Item Basic Details Only
-class CartproductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ('id', 'item', 'price', 'image',)
+        fields = ('id', 'name', 'price', 'quantity', 'seller', 'category', 'subcategory', 'productdetail', 'mainimage', 'productimg',)
 
 
-# Cart Display Serializer
+###################### CART ######################
+
+class CartProductsSerializer(serializers.ModelSerializer):
+    category = serializers.SlugRelatedField(slug_field='name', queryset=Category.objects.all())
+    subcategory = serializers.SlugRelatedField(slug_field='name', queryset=Subcategory.objects.all())
+    productdetail = ProductdetailsSerializer()
+    seller = serializers.SlugRelatedField(slug_field='username', queryset=CustomerUser.objects.all())
+
+    class Meta:
+        model = Product
+        fields = ('id', 'name', 'price', 'seller', 'mainimage', 'category', 'subcategory', 'productdetail')
+
+
 class CartSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cart
         fields = '__all__'
 
 
-# cart items only Serializer
-class Itemsincart(serializers.ModelSerializer):
-    product = CartproductSerializer(many=False)
+class cartitemsSerializer(serializers.ModelSerializer):
+    product = CartProductsSerializer(many=False)
     itemtotal = serializers.SerializerMethodField(method_name="total")
 
     class Meta:
@@ -83,20 +118,20 @@ class Itemsincart(serializers.ModelSerializer):
         fields = ['id', 'product', 'quantity', 'itemtotal']
 
     def total(self, cartitems: CartItem):
-        return cartitems.quantity * cartitems.product.price
+        total = cartitems.quantity * cartitems.product.price
+        return total
 
 
-# Cart Items Serializer
 class CartDataSerializer(serializers.ModelSerializer):
     id = serializers.UUIDField(read_only=True)
-    items = Itemsincart(many=True)
-    GrandTotal = serializers.SerializerMethodField(method_name='main_total')
+    items = cartitemsSerializer(many=True)
+    Subtotal = serializers.SerializerMethodField(method_name='grandtotal')
 
     class Meta:
         model = Cart
-        fields = ['id', 'customeruser', 'items', "GrandTotal"]
+        fields = ['id', 'customer', 'items', "Subtotal"]
 
-    def main_total(self, cart: Cart):
+    def grandtotal(self, cart: Cart):
         items = cart.items.all()
         sum = 0
         for item in items:
@@ -104,4 +139,31 @@ class CartDataSerializer(serializers.ModelSerializer):
         return sum
 
 
+####################
 
+
+class Orderserializer(serializers.ModelSerializer):
+    created_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S")
+
+    class Meta:
+        model = Order
+        fields = '__all__'
+#######################################################
+class SellersstatusSer(serializers.ModelSerializer):
+    seller = serializers.SlugRelatedField(slug_field='username', queryset=CustomerUser.objects.all())
+    class Meta:
+        model = orderapprovals
+        fields = '__all__'
+
+class DeliveryAddressser(serializers.ModelSerializer):
+    class Meta:
+        model = Orderaddress
+        fields = '__all__'
+
+class AllorderSerializer(serializers.ModelSerializer):
+    sellerstatus = SellersstatusSer(many=True)
+    customer = serializers.SlugRelatedField(slug_field='username', queryset=CustomerUser.objects.all())
+    orderaddress = DeliveryAddressser(many=True)
+    class Meta:
+        model = Order
+        fields = '__all__'

@@ -1,0 +1,19 @@
+{% extends 'frontend/base/base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <!--====== App Content ======-->
+    <div class="app-content">
+
+        {#        {% include './slider.html' %}#}
+        {% if cartitems.items|length == 0 %}
+            {% include './emptycart.html' %}
+        {% else %}
+            {% include './maincontent.html' %}
+        {% endif %}
+
+    </div>
+    <!--====== End - App Content ======-->
+
+{% endblock %}
